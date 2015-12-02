@@ -43,6 +43,27 @@ def load_messages():
          for r in rows}
     return response.json(dict(board_list=d))
 
+def loadGroup():
+    """Loads all messages for the user."""
+    rows = db(db.Groups.id > 0).select()
+    d = {r.id: {'groupName': r.groupName,
+                'groupId': r.id}
+         for r in rows}
+    return response.json(dict(groupList=d))
+
+
+@auth.requires_signature()
+def createGroup():
+    db.Groups.insert(groupName = request.vars.groupName)
+    rows = db(db.Groups.id > 0).select()
+    d = {r.id: {'groupName': r.groupName,
+                'groupId': r.id}
+         for r in rows}
+    return response.json(dict(groupList=d))
+
+
+
+
 
 @auth.requires_signature()
 def add_msg():
@@ -50,6 +71,8 @@ def add_msg():
         Board_Title= request.vars.Board_Title,
         )
     return "ok"
+
+
 
 
 

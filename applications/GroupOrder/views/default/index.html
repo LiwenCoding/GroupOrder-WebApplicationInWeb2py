@@ -12,6 +12,9 @@
     {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
     </div>
     {{else:}}
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Group
+    </button>
     <div><a class="btn btn-success" id="btn_add" on-click="creatBoard">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Create Board</a>
@@ -24,6 +27,38 @@
     {% /if %}
 </div>
 <br><br>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create your group</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="inputName" class="form-control" placeholder="Group Name">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" on-click="createGroup">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="board_list">
+        {% #groupList:id %}
+        <div on-click="startedit" data-id="{% groupId %}" class="message col-md-3 board title"><p id="paragraph{% groupId %}">{% groupName %}</p>
+        <br><br><br><br><br><br><br><br><br><br><br><br><a class="link" href="{{=URL('default', 'post')}}/{% Board_id %}">Go to Board Page</a>
+        </div>
+        {% /groupList %}
+    </div>
+  </div>
+</div>
+
 
 
 <div class="container">
@@ -59,6 +94,8 @@ $(function() {
             board_list: {},
             loading: true,
             editing: false,
+
+            groupList: {},
         }
     });
 
@@ -71,6 +108,44 @@ $(function() {
             }
         }
     );
+
+    $.ajax("{{=URL('default', 'loadGroup', user_signature=True)}}",
+        {
+            method: 'POST',
+            success: function (data) {
+              ractive.set('groupList', data['groupList']);
+              ractive.set('loading', false);
+            }
+        }
+    );
+
+
+
+
+
+    ractive.on("createGroup", function() {
+        var groupName = $("#inputName").val();
+        $("#inputName").val('');
+        if (groupName != '') {
+//            alert(groupName)
+            $('#myModal').modal('hide')
+            $.ajax("{{=URL('default', 'createGroup', user_signature=True)}}",
+            {
+              data: {
+                groupName: groupName,
+              },
+              method: 'POST',
+              success: function(data) {
+                  ractive.set('groupList', data['groupList']);
+                  ractive.set('loading', false);
+              },
+              error: function() {}
+            });
+        }
+    });
+
+
+
 
     ractive.on("startedit", function(e) {
         ractive.set("editing", true);

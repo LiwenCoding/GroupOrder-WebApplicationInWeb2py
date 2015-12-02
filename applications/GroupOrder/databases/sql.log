@@ -10664,3 +10664,216 @@ success!
 success!
 success!
 success!
+timestamp: 2015-12-02T13:28:32.139881
+CREATE TABLE Groups(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    groupName CHAR(512),
+    groupCreator INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-12-02T13:28:32.143250
+CREATE TABLE Menus(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    menuName CHAR(512),
+    menuCreator INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    groupId INTEGER REFERENCES Groups (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-12-02T13:28:32.145315
+CREATE TABLE MenuDetails(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    dishName CHAR(512),
+    dishPrice CHAR(512),
+    menuId INTEGER REFERENCES Menus (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-12-02T13:28:32.147784
+CREATE TABLE GroupOrders(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    groupOrderCreator INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    groupOrderDeadline CHAR(512),
+    menuId INTEGER REFERENCES Menus (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-12-02T13:28:32.149847
+CREATE TABLE SingleOrder(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    singleOrderCreator INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    orderId INTEGER REFERENCES GroupOrders (id) ON DELETE CASCADE  ,
+    orderList CHAR(512),
+    orderQuantity CHAR(512),
+    orderPrice CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
