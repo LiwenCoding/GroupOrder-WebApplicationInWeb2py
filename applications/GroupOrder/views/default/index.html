@@ -1,0 +1,138 @@
+{{extend 'layout.html'}}
+
+<div id="target"></div>
+
+
+
+<script id="template" type="text/ractive">
+<div>
+    {{if auth.user_id is None:}}
+    <div id="main_login">
+    {{=A('Sign Up', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['register']))}}
+    {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
+    </div>
+    {{else:}}
+    <div><a class="btn btn-success" id="btn_add" on-click="creatBoard">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Create Board</a>
+    </div>
+    {{pass}}
+    {% #if loading %}
+    <div id="load_spinner">
+    <i class="fa fa-spinner fa-pulse fa-2x"></i>
+    </div>
+    {% /if %}
+</div>
+<br><br>
+
+
+<div class="container">
+  <div class="row">
+    <div class="board_list">
+        {% #board_list:id %}
+        {% #if editing %}
+        <textarea on-blur="editdone" id="myText{% Board_id %}" data-id="{% Board_id %}" class="message col-md-3 board title" value= "{% Board_Title %}">
+        </textarea>
+        {% else %}
+        <div on-click="startedit" data-id="{% Board_id %}" class="message col-md-3 board title"><p id="paragraph{% Board_id %}">{% Board_Title %}</p>
+        <br><br><br><br><br><br><br><br><br><br><br><br><a class="link" href="{{=URL('default', 'post')}}/{% Board_id %}">Go to Board Page</a>
+        </div>
+        {% /if %}
+        {% /board_list %}
+    </div>
+  </div>
+</div>
+</script>
+
+
+
+
+
+<script>
+$(function() {
+    var ractive = new Ractive({
+        el: '#target',
+        template: '#template',
+        delimiters: ['{%', '%}'],
+        tripleDelimiters: ['{%%', '%%}'],
+        data: {
+            board_list: {},
+            loading: true,
+            editing: false,
+        }
+    });
+
+    $.ajax("{{=URL('default', 'load_messages', user_signature=True)}}",
+        {
+            method: 'POST',
+            success: function (data) {
+              ractive.set('board_list', data['board_list']);
+              ractive.set('loading', false);
+            }
+        }
+    );
+
+    ractive.on("startedit", function(e) {
+        ractive.set("editing", true);
+        var id = $(e.node).data("id");
+        $("#myText"+id).focus();
+    });
+
+    ractive.on("editdone", function (e){
+       ractive.set("editing", false);
+        var id = $(e.node).data("id");
+        var text = $("#paragraph"+id).text();
+        if (text === "") {
+            text = "Board title can't be blank, please write some content";
+        }
+        send_message(text, id);
+    });
+
+    ractive.on("creatBoard", function (e) {
+        var title = "write some content";
+        send_title(title);
+    });
+
+    function send_title(Board_Title) {
+        $.ajax("{{=URL('default', 'new_board', user_signature=True)}}",
+        {
+          data: {
+            Board_Title: Board_Title,
+          },
+          method: 'POST',
+          success: function(data) {
+              ractive.set('board_list', data['board_list']);
+              ractive.set('loading', false);
+          },
+          error: function() {}
+        });
+    }
+
+
+  function send_message(Board_Title, Board_id) {
+    $.ajax("{{=URL('default', 'add_msg', user_signature=True)}}",
+        {
+          data: {
+            Board_Title: Board_Title,
+            Board_id: Board_id
+          },
+          method: 'POST',
+          success: function() {
+            var board_list = ractive.get('board_list');
+            if ( Board_id in board_list) {
+              board_list[Board_id]['Board_Title'] = Board_Title;
+            } else {
+                board_list[board_list] = {
+                Board_Title: Board_Title,
+                Board_id: Board_id}
+            }
+            ractive.set('board_list', board_list);
+          },
+          error: function() {}
+        }
+    );
+  }
+});
+</script>
+
+
