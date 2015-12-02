@@ -16,6 +16,38 @@
 #########################################################################
 from datetime import datetime,timedelta
 
+db.define_table('Groups',
+                Field('groupName'),
+                Field('groupCreator', db.auth_user))
+
+db.define_table('Menus',
+                Field('menuName'),
+                Field('menuCreator', db.auth_user),
+                Field('groupId', db.Groups))
+
+db.define_table('MenuDetails',
+                Field('dishName'),
+                Field('dishPrice'),
+                Field('menuId', db.Menus))
+
+db.define_table('GroupOrders',
+                Field('groupOrderCreator', db.auth_user),
+                Field('groupOrderDeadline'),
+                Field('menuId', db.Menus))
+
+db.define_table('SingleOrder',
+                Field('singleOrderCreator', db.auth_user),
+                Field('orderId', db.GroupOrders),
+                Field('orderList'),
+                Field('orderQuantity'),
+                Field('orderPrice'))
+
+
+
+
+
+
+
 db.define_table('bulletinboards',
                 Field('Board_Title'),
                 Field('Created_On', 'datetime'),
