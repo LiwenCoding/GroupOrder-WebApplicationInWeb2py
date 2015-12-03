@@ -43,6 +43,11 @@ def load_messages():
          for r in rows}
     return response.json(dict(board_list=d))
 
+
+
+
+
+
 def loadGroup():
     """Loads all messages for the user."""
     rows = db(db.Groups.id > 0).select()
@@ -61,6 +66,9 @@ def createGroup():
          for r in rows}
     return response.json(dict(groupList=d))
 
+def groupOrders():
+
+    return "ok"
 
 
 
