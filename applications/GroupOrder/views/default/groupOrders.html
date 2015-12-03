@@ -12,8 +12,8 @@
     {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
     </div>
     {{else:}}
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Group
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg">
+     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Menu
     </button>
     <div><a class="btn btn-success" id="btn_add" on-click="creatBoard">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -29,15 +29,293 @@
 <br><br>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create your group</h4>
+        <h4 class="modal-title" id="myModalLabel">Create a Menu</h4>
+
       </div>
       <div class="modal-body">
-        <input type="text" id="inputName" class="form-control" placeholder="Group Name">
+        <form>
+        <div class="col-xs-6">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">Your Menu Name:</div>
+                <input type="text" class="form-control" placeholder="Menu Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">1</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">2</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+
+           <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">3</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">4</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+
+           <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">5</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+
+           <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">6</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+
+           <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">7</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">8</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+<div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">9</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">10</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">11</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">12</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">13</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">14</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">15</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="form-group">
+              <div class="input-group ">
+                <div class="input-group-addon">16</div>
+                <input type="text" class="form-control" placeholder="Item Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+             <div class="input-group ">
+                 <div class="input-group-addon">$</div>
+                 <input type="number" class="form-control" placeholder="Price">
+             </div>
+            </div>
+          </div>
+        </form>
+
+
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

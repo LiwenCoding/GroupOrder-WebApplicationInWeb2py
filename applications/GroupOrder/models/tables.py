@@ -26,8 +26,8 @@ db.define_table('Menus',
                 Field('groupId', db.Groups))
 
 db.define_table('MenuDetails',
-                Field('dishName'),
-                Field('dishPrice'),
+                Field('itemName'),
+                Field('itemPrice'),
                 Field('menuId', db.Menus))
 
 db.define_table('GroupOrders',
