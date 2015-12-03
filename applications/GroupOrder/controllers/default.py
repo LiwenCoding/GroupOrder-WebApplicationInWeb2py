@@ -68,7 +68,7 @@ def createGroup():
 
 def groupOrders():
 
-    return "ok"
+    return dict()
 
 
 
