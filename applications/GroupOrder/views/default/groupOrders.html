@@ -57,7 +57,7 @@
               <label class="sr-only" for="item1">item1</label>
               <div class="input-group ">
                 <div class="input-group-addon">1</div>
-                <input type="text" class="form-control" placeholder="Item Name">
+                <input type="text" class="form-control" id="item1" placeholder="Item Name">
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@
              <label class="sr-only" for="price1">price1</label>
              <div class="input-group ">
                  <div class="input-group-addon">$</div>
-                 <input type="number" class="form-control" placeholder="Price">
+                 <input type="number" class="form-control" id="price1" placeholder="Price">
              </div>
             </div>
           </div>
@@ -78,7 +78,7 @@
               <label class="sr-only" for="item2">item2</label>
               <div class="input-group ">
                 <div class="input-group-addon">1</div>
-                <input type="text" class="form-control" placeholder="Item Name">
+                <input type="text" class="form-control" id="item2" placeholder="Item Name">
               </div>
             </div>
           </div>
@@ -87,19 +87,19 @@
              <label class="sr-only" for="price2">price2</label>
              <div class="input-group ">
                  <div class="input-group-addon">$</div>
-                 <input type="number" class="form-control" placeholder="Price">
+                 <input type="number" class="form-control" id="price2" placeholder="Price">
              </div>
             </div>
           </div>
         </div>
 
-         <div id="list1">
+         <div id="list3">
           <div class="col-xs-10">
             <div class="form-group">
               <label class="sr-only" for="item3">item3</label>
               <div class="input-group ">
                 <div class="input-group-addon">1</div>
-                <input type="text" class="form-control" placeholder="Item Name">
+                <input type="text" class="form-control" name="Item Name" id="item3" placeholder="Item Name">
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@
              <label class="sr-only" for="price3">price3</label>
              <div class="input-group ">
                  <div class="input-group-addon">$</div>
-                 <input type="number" class="form-control" placeholder="Price">
+                 <input type="number" class="form-control" id="price3" placeholder="Price">
              </div>
             </div>
           </div>
@@ -153,20 +153,24 @@
     </div>
 
 
+<div>menuCreator: {% menuCreator %}</div>
+<div>groupId: {% groupId %}</div>
 
-    <div class="col-sm-9">
+<!--
+      <div class="col-sm-9">
       <h1 class="page-header">Dashboard</h1>
       <div class="board_list">
-        {% #groupList:id %}
-        <a class="link" href="{{=URL('default', 'groupOrders')}}/{% groupId %}">
-        <div on-click="startedit" data-id="{% groupId %}" class="message col-md-3 board title"><p id="paragraph{% groupId %}">{% groupName %}</p>
+        {% #displayMenu:id %}
+        <div on-click="startedit" data-id="{% groupId %}" class="message col-md-3 board title"><p id="paragraph{% groupId %}">{% menuName %}</p>
         </div>
         </a>
-        {% /groupList %}
+        {% /displayMenu %}
       </div>
     </div>
   </div>
-</div>
+
+-->
+
 
 
 
@@ -196,158 +200,113 @@ $(function() {
             editing: false,
 
             groupList: {},
+
+
+
+            displayMenu: {},
+            groupId: "{{=groupId}}",
+            menuCreator: "{{=auth.user_id}}"
         }
     });
 
-    $.ajax("{{=URL('default', 'load_messages', user_signature=True)}}",
-        {
-            method: 'POST',
-            success: function (data) {
-              ractive.set('board_list', data['board_list']);
-              ractive.set('loading', false);
-            }
-        }
-    );
 
-    $.ajax("{{=URL('default', 'loadGroup', user_signature=True)}}",
-        {
-            method: 'POST',
-            success: function (data) {
-              ractive.set('groupList', data['groupList']);
-              ractive.set('loading', false);
-            }
-        }
-    );
 
+
+//    $.ajax("{{=URL('default', 'loadMenuList', user_signature=True)}}",
+//        {
+//            method: 'POST',
+//            success: function (data) {
+//              ractive.set('displayMenu', data['displayMenu']);
+//              ractive.set('loading', false);
+//            }
+//        }
+//    );
+
+
+
+
+
+
+//
+//    $.ajax("{{=URL('default', 'loadGroup', user_signature=True)}}",
+//        {
+//            method: 'POST',
+//            success: function (data) {
+//              ractive.set('groupList', data['groupList']);
+//              ractive.set('loading', false);
+//            }
+//        }
+//    );
+//
     ractive.on("saveMenu", function() {
 //        var t = $("input").eq(5).val();
 //do validation price should be number,  input1 and input2 have to be filled both.
-        var menuList = [];
-        $("input").each(function(index, value) {
-            if ($(this).val() != "") {
-            menuList.push($(this).val());
-            alert(menuList[index]);
-            } else {
-                menuList.push("null");
-//                alert("null");
-            }
-        });
+//        var menuList = [];
+//        $("input").each(function(index, value) {
+//            if ($(this).val() != "") {
+//            menuList.push($(this).val());
+////            alert(menuList[index]);
+//            } else {
+//                menuList.push("null");
+////                alert("null");
+//            }
+//        });
 
+        alert($("#menuName").val());
+        alert($("#item1").val());
+        alert($("#price1").val());
+        alert($("#item2").val());
+        alert($("#price2").val());
+
+
+
+
+
+
+//
         $.ajax("{{=URL('default', 'addMenuList', user_signature=True)}}",
         {
           data: {
-                menuList: menuList,
+//                menuList: JSON.stringify(menuList),
+                menuName: $("#menuName").val(),
+                itme1: $("#item1").val(),
+                price1: $("#price1").val(),
+                itme2: $("#item2").val(),
+                price2: $("#price2").val(),
+                itme3: $("#item3").val(),
+                price3: $("#price3").val(),
+
+
+
+                groupId: ractive.get('groupId'),
+                menuCreator: ractive.get('menuCreator'),
           },
           method: 'POST',
           success: function() {
-            var board_list = ractive.get('board_list');
-            if ( Board_id in board_list) {
-              board_list[Board_id]['Board_Title'] = Board_Title;
-            } else {
-                board_list[board_list] = {
-                Board_Title: Board_Title,
-                Board_id: Board_id}
-            }
-            ractive.set('board_list', board_list);
-          },
-          error: function() {}
-        }
-    );
-
-
-
-
-
-
-    });
-
-$("#menuForm").validate();
-
-
-    ractive.on("createGroup", function() {
-        var groupName = $("#inputName").val();
-        $("#inputName").val('');
-        if (groupName != '') {
-//            alert(groupName)
-            $('#myModal').modal('hide')
-            $.ajax("{{=URL('default', 'createGroup', user_signature=True)}}",
-            {
-              data: {
-                groupName: groupName,
-              },
-              method: 'POST',
-              success: function(data) {
-                  ractive.set('groupList', data['groupList']);
-                  ractive.set('loading', false);
-              },
-              error: function() {}
-            });
-        }
-    });
-
-
-
-
-    ractive.on("startedit", function(e) {
-        ractive.set("editing", true);
-        var id = $(e.node).data("id");
-        $("#myText"+id).focus();
-    });
-
-    ractive.on("editdone", function (e){
-       ractive.set("editing", false);
-        var id = $(e.node).data("id");
-        var text = $("#paragraph"+id).text();
-        if (text === "") {
-            text = "Board title can't be blank, please write some content";
-        }
-        send_message(text, id);
-    });
-
-    ractive.on("creatBoard", function (e) {
-        var title = "write some content";
-        send_title(title);
-    });
-
-    function send_title(Board_Title) {
-        $.ajax("{{=URL('default', 'new_board', user_signature=True)}}",
-        {
-          data: {
-            Board_Title: Board_Title,
-          },
-          method: 'POST',
-          success: function(data) {
-              ractive.set('board_list', data['board_list']);
+//              ractive.set('displayMenu', data['displayMenu']);
               ractive.set('loading', false);
           },
           error: function() {}
-        });
-    }
-
-
-  function send_message(Board_Title, Board_id) {
-    $.ajax("{{=URL('default', 'add_msg', user_signature=True)}}",
-        {
-          data: {
-            Board_Title: Board_Title,
-            Board_id: Board_id
-          },
-          method: 'POST',
-          success: function() {
-            var board_list = ractive.get('board_list');
-            if ( Board_id in board_list) {
-              board_list[Board_id]['Board_Title'] = Board_Title;
-            } else {
-                board_list[board_list] = {
-                Board_Title: Board_Title,
-                Board_id: Board_id}
-            }
-            ractive.set('board_list', board_list);
-          },
-          error: function() {}
         }
     );
-  }
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
 });
 </script>
 

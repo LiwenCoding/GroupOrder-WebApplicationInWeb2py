@@ -7,7 +7,7 @@
 ## - user is required for authentication and authorization
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
-
+import json
 def index():
     """
     example action using the internationalization operator T and flash
@@ -26,7 +26,7 @@ def index():
     if form.process().accepted:
         redirect(URL('default', 'index'))
     postsdblist = db(db.posts.Post_Title > 0).select()
-    return dict(board_list=board_list, form=form, postsdblist=postsdblist, page=page,items_per_page=items_per_page)
+    return dict( board_list=board_list, form=form, postsdblist=postsdblist, page=page,items_per_page=items_per_page)
 
 def reset():
   db(db.bulletinboards.id> 0).delete()
@@ -59,7 +59,8 @@ def loadGroup():
 
 @auth.requires_signature()
 def createGroup():
-    db.Groups.insert(groupName = request.vars.groupName)
+    db.Groups.insert(groupName = request.vars.groupName,
+                     groupCreator = request.vars.groupCreator)
     rows = db(db.Groups.id > 0).select()
     d = {r.id: {'groupName': r.groupName,
                 'groupId': r.id}
@@ -67,8 +68,52 @@ def createGroup():
     return response.json(dict(groupList=d))
 
 def groupOrders():
+    groupId = request.args[0]
+    return dict(groupId=groupId)
 
-    return dict()
+
+
+#
+# def loadMenuList():
+#
+#     rows = db(db.Menus.id > 0).select()
+#     d = {r.id: {'menuName': r.menuName,
+#
+#                 'MenuId': r.id}
+#          for r in rows}
+#     return response.json(dict(displayMenu=d))
+
+
+
+
+def addMenuList():
+
+    # menuList = json.load(request.vars.menuList)
+
+    db.Menus.insert(menuName = request.vars.menuName,
+                    menuCreator = request.vars.menuCreator,
+                    groupId = request.vars.groupId)
+
+    row = db(db.Menus.id > 0).select(~db.Menus.id)
+
+    db.MenuDetails.insert(itemName = request.vars.item1,
+                          itemPrice = request.vars.price1,
+                           )
+
+    db.MenuDetails.insert(itemName = request.vars.item2,
+                      itemPrice = request.vars.price2,
+                     )
+
+    db.MenuDetails.insert(itemName = request.vars.item3,
+                      itemPrice = request.vars.price3,
+                      )
+
+
+    return "ok"
+
+
+
+
 
 
 

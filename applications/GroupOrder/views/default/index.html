@@ -97,6 +97,7 @@ $(function() {
             editing: false,
 
             groupList: {},
+            groupCreator: "{{=auth.user_id}}",
         }
     });
 
@@ -134,6 +135,7 @@ $(function() {
             {
               data: {
                 groupName: groupName,
+                groupCreator: ractive.get('groupCreator'),
               },
               method: 'POST',
               success: function(data) {
