@@ -73,8 +73,17 @@ def groupOrders():
 
 
 
-#
-# def loadMenuList():
+
+def loadMenuList():
+
+    rows = db(db.Menus.id > 0).select()
+    d = {r.id: {'menuName': r.menuName,
+
+                'MenuId': r.id}
+         for r in rows}
+    return response.json(dict(displayMenu=d))
+
+# def loadDetailedMenuList():
 #
 #     rows = db(db.Menus.id > 0).select()
 #     d = {r.id: {'menuName': r.menuName,
@@ -82,7 +91,6 @@ def groupOrders():
 #                 'MenuId': r.id}
 #          for r in rows}
 #     return response.json(dict(displayMenu=d))
-
 
 
 
@@ -94,22 +102,27 @@ def addMenuList():
                     menuCreator = request.vars.menuCreator,
                     groupId = request.vars.groupId)
 
-    row = db(db.Menus.id > 0).select(~db.Menus.id)
+    rows = db(db.Menus.id > 0).select()
+    thisMenu = rows.last()
 
     db.MenuDetails.insert(itemName = request.vars.item1,
                           itemPrice = request.vars.price1,
-                           )
+                           menuId = thisMenu.id)
 
     db.MenuDetails.insert(itemName = request.vars.item2,
                       itemPrice = request.vars.price2,
-                     )
+                     menuId = thisMenu.id)
 
     db.MenuDetails.insert(itemName = request.vars.item3,
                       itemPrice = request.vars.price3,
-                      )
+                      menuId = thisMenu.id)
 
+    rows = db(db.Menus.id > 0).select()
+    d = {r.id: {'menuName': r.menuName,
 
-    return "ok"
+                'MenuId': r.id}
+         for r in rows}
+    return response.json(dict(displayMenu=d))
 
 
 

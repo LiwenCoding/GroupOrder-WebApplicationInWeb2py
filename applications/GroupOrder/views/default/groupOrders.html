@@ -156,20 +156,18 @@
 <div>menuCreator: {% menuCreator %}</div>
 <div>groupId: {% groupId %}</div>
 
-<!--
+
       <div class="col-sm-9">
       <h1 class="page-header">Dashboard</h1>
       <div class="board_list">
         {% #displayMenu:id %}
         <div on-click="startedit" data-id="{% groupId %}" class="message col-md-3 board title"><p id="paragraph{% groupId %}">{% menuName %}</p>
         </div>
-        </a>
         {% /displayMenu %}
       </div>
     </div>
-  </div>
 
--->
+
 
 
 
@@ -212,15 +210,15 @@ $(function() {
 
 
 
-//    $.ajax("{{=URL('default', 'loadMenuList', user_signature=True)}}",
-//        {
-//            method: 'POST',
-//            success: function (data) {
-//              ractive.set('displayMenu', data['displayMenu']);
-//              ractive.set('loading', false);
-//            }
-//        }
-//    );
+    $.ajax("{{=URL('default', 'loadMenuList', user_signature=True)}}",
+        {
+            method: 'POST',
+            success: function (data) {
+              ractive.set('displayMenu', data['displayMenu']);
+              ractive.set('loading', false);
+            }
+        }
+    );
 
 
 
@@ -252,11 +250,11 @@ $(function() {
 //            }
 //        });
 
-        alert($("#menuName").val());
-        alert($("#item1").val());
-        alert($("#price1").val());
-        alert($("#item2").val());
-        alert($("#price2").val());
+//        alert($("#menuName").val());
+//        alert($("#item1").val());
+//        alert($("#price1").val());
+//        alert($("#item2").val());
+//        alert($("#price2").val());
 
 
 
@@ -282,9 +280,13 @@ $(function() {
                 menuCreator: ractive.get('menuCreator'),
           },
           method: 'POST',
-          success: function() {
-//              ractive.set('displayMenu', data['displayMenu']);
+          success: function(data) {
+              ractive.set('displayMenu', data['displayMenu']);
               ractive.set('loading', false);
+//                $("input").each().val("");
+
+              $("#myModal").modal('hide');
+
           },
           error: function() {}
         }
