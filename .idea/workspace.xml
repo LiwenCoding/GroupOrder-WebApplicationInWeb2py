@@ -58,8 +58,8 @@
       <file leaf-file-name="groupOrders.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5176849">
-              <caret line="285" column="44" selection-start-line="285" selection-start-column="0" selection-end-line="286" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.4340836">
+              <caret line="289" column="23" selection-start-line="289" selection-start-column="23" selection-end-line="289" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -596,8 +596,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5176849">
-          <caret line="285" column="44" selection-start-line="285" selection-start-column="0" selection-end-line="286" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4340836">
+          <caret line="289" column="23" selection-start-line="289" selection-start-column="23" selection-end-line="289" selection-end-column="23" />
           <folding />
         </state>
       </provider>

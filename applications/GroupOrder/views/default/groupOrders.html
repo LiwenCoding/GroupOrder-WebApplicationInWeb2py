@@ -38,6 +38,9 @@
 
       </div>
       <div class="modal-body">
+
+
+
         <form id="menuForm">
         <div class="col-xs-6">
             <div class="form-group">
@@ -284,7 +287,7 @@ $(function() {
               ractive.set('displayMenu', data['displayMenu']);
               ractive.set('loading', false);
 //                $("input").each().val("");
-
+              $('#menuForm')[0].reset();
               $("#myModal").modal('hide');
 
           },
