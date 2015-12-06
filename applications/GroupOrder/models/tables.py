@@ -44,24 +44,3 @@ db.define_table('SingleOrder',
 
 
 
-
-
-
-
-db.define_table('bulletinboards',
-                Field('Board_Title'),
-                Field('Created_On', 'datetime'),
-                )
-db.bulletinboards.Created_On.default = datetime.utcnow()
-db.define_table('posts',
-                Field('author', db.auth_user),
-                Field('Post_Title', 'string'),
-                Field('Post_Description', 'text'),
-                Field('Created_On', 'datetime'),
-                Field('Category', db.bulletinboards))
-db.posts.author.readable = db.posts.author.writable = False
-db.posts.Created_On.readable = db.posts.Created_On.writable = False
-db.posts.Created_On.default = datetime.utcnow()
-now = datetime.utcnow()
-yesterday = now - timedelta(days=1)
-

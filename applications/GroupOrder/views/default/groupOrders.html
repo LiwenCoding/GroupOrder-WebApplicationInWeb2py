@@ -132,11 +132,16 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
+      <!--
         <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Reports</a></li>
+
         <li><a href="#">Analytics</a></li>
-        <li><a href="#">Export</a></li>
-        <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".menuDetail">Large modal</button></li>
+        <li><a href="#">Export</a></li> -->
+        <h2>Menus</h2>
+        {% #displayMenu:id %}
+        <li><button type="button" class="btn btn-primary" data-toggle="modal" on-click="showMenuDetail" data-id="{% menuId %}" data-target=".menuDetail">{% menuName %}</button></li>
+        {% /displayMenu %}
       </ul>
 
 
@@ -148,13 +153,19 @@
 
 
       <div class="col-sm-9">
-      <h1 class="page-header">Dashboard</h1>
+      <h1 class="page-header">GroupOrders</h1>
+
+
+      <!--
       <div class="board_list">
         {% #displayMenu:id %}
         <div on-click="showMenuDetail" data-id="{% menuId %}" class="message col-md-3 board title"><p id="paragraph{% menuId %}">{% menuName %}</p>
         </div>
         {% /displayMenu %}
       </div>
+      -->
+
+
     </div>
 
 
@@ -169,6 +180,13 @@
         <h4 class="modal-title" id="myModalLabel">Create a Menu</h4>
       </div>
       <div class="modal-body">
+
+      <h4>menu conten</h4>
+
+
+
+
+
       </div>
     </div>
   </div>
