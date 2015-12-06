@@ -73,9 +73,10 @@ def addMenuList():
                       menuId = thisMenu.id)
 
     rows = db(db.Menus.groupId == request.vars.groupId).select()
+
     d = {r.id: {'menuName': r.menuName,
 
-                'MenuId': r.id}
+                'menuId': r.id}
          for r in rows}
     return response.json(dict(displayMenu=d))
 
