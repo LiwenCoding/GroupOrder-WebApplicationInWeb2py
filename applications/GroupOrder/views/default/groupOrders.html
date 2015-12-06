@@ -140,7 +140,7 @@
         <li><a href="#">Export</a></li> -->
         <h2>Menus</h2>
         {% #displayMenu:id %}
-        <li><button type="button" class="btn btn-primary" data-toggle="modal" on-click="showMenuDetail" data-id="{% menuId %}" data-target=".menuDetail">{% menuName %}</button></li>
+        <li><button type="button" class="btn btn-primary" data-toggle="modal" data-id="{% menuId %}" on-click="showMenuDetail"  data-target=".menuDetail">{% menuName %}</button></li>
         {% /displayMenu %}
       </ul>
 
@@ -181,10 +181,10 @@
       </div>
       <div class="modal-body">
 
-      <h4>menu conten</h4>
-
-
-
+      <h4>menu content</h4>
+      {% #displayMenuDetail:id %}
+        <div><p>Item: {% itemName %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price: $ {% itemPrice %}</p></div>
+      {% /displayMenuDetail %}
 
 
       </div>
@@ -215,7 +215,9 @@ $(function() {
             loading: true,
             displayMenu: {},
             groupId: "{{=groupId}}",
-            menuCreator: "{{=auth.user_id}}"
+            menuCreator: "{{=auth.user_id}}",
+            displayMenuDetail: {},
+
         }
     });
 
@@ -260,11 +262,11 @@ $(function() {
           data: {
 //                menuList: JSON.stringify(menuList),
                 menuName: $("#menuName").val(),
-                itme1: $("#item1").val(),
+                item1: $("#item1").val(),
                 price1: $("#price1").val(),
-                itme2: $("#item2").val(),
+                item2: $("#item2").val(),
                 price2: $("#price2").val(),
-                itme3: $("#item3").val(),
+                item3: $("#item3").val(),
                 price3: $("#price3").val(),
                 groupId: ractive.get('groupId'),
                 menuCreator: ractive.get('menuCreator'),
@@ -285,14 +287,25 @@ $(function() {
         var menuId = $(e.node).data("id");
 
 //        alert(menuId);
-
+        getMenuDetail(menuId);
 
 
     });
 
     function getMenuDetail(menuId) {
 
-
+    $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
+        {
+            data: {
+                menuId: menuId,
+            },
+            method: 'POST',
+            success: function (data) {
+              ractive.set('displayMenuDetail', data['displayMenuDetail']);
+              ractive.set('loading', false);
+            }
+        }
+    );
 
 
     }

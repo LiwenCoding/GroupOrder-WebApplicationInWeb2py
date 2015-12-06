@@ -80,7 +80,13 @@ def addMenuList():
     return response.json(dict(displayMenu=d))
 
 
-
+def getMenuDetail():
+    rows = db(db.MenuDetails.menuId == request.vars.menuId).select()
+    d = {r.id: {'itemName': r.itemName,
+                'itemPrice': r.itemPrice,
+                'itemId': r.id}
+         for r in rows}
+    return response.json(dict(displayMenuDetail=d))
 
 
 
