@@ -72,14 +72,12 @@ def groupOrders():
     return dict(groupId=groupId)
 
 
-
-
 def loadMenuList():
 
-    rows = db(db.Menus.id > 0).select()
+    rows = db(db.Menus.groupId == request.vars.groupId).select()
     d = {r.id: {'menuName': r.menuName,
 
-                'MenuId': r.id}
+                'menuId': r.id}
          for r in rows}
     return response.json(dict(displayMenu=d))
 
@@ -102,7 +100,7 @@ def addMenuList():
                     menuCreator = request.vars.menuCreator,
                     groupId = request.vars.groupId)
 
-    rows = db(db.Menus.id > 0).select()
+    rows = db(db.Menus.groupId == request.vars.groupId).select()
     thisMenu = rows.last()
 
     db.MenuDetails.insert(itemName = request.vars.item1,

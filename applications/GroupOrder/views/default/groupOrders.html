@@ -140,19 +140,10 @@
         <li><a href="#">Reports</a></li>
         <li><a href="#">Analytics</a></li>
         <li><a href="#">Export</a></li>
+        <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".menuDetail">Large modal</button></li>
       </ul>
-      <ul class="nav nav-sidebar">
-        <li><a href="">Nav item</a></li>
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
-        <li><a href="">More navigation</a></li>
-      </ul>
-      <ul class="nav nav-sidebar">
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
-      </ul>
+
+
     </div>
 
 
@@ -164,7 +155,7 @@
       <h1 class="page-header">Dashboard</h1>
       <div class="board_list">
         {% #displayMenu:id %}
-        <div on-click="startedit" data-id="{% groupId %}" class="message col-md-3 board title"><p id="paragraph{% groupId %}">{% menuName %}</p>
+        <div on-click="showMenuDetail" data-id="{% menuId %}" class="message col-md-3 board title"><p id="paragraph{% menuId %}">{% menuName %}</p>
         </div>
         {% /displayMenu %}
       </div>
@@ -174,7 +165,18 @@
 
 
 
-
+<div class="modal fade menuDetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create a Menu</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -196,25 +198,18 @@ $(function() {
         delimiters: ['{%', '%}'],
         tripleDelimiters: ['{%%', '%%}'],
         data: {
-            board_list: {},
             loading: true,
-            editing: false,
-
-            groupList: {},
-
-
-
             displayMenu: {},
             groupId: "{{=groupId}}",
             menuCreator: "{{=auth.user_id}}"
         }
     });
 
-
-
-
     $.ajax("{{=URL('default', 'loadMenuList', user_signature=True)}}",
         {
+            data: {
+                groupId: ractive.get('groupId'),
+            },
             method: 'POST',
             success: function (data) {
               ractive.set('displayMenu', data['displayMenu']);
@@ -228,17 +223,6 @@ $(function() {
 
 
 
-//
-//    $.ajax("{{=URL('default', 'loadGroup', user_signature=True)}}",
-//        {
-//            method: 'POST',
-//            success: function (data) {
-//              ractive.set('groupList', data['groupList']);
-//              ractive.set('loading', false);
-//            }
-//        }
-//    );
-//
     ractive.on("saveMenu", function() {
 //        var t = $("input").eq(5).val();
 //do validation price should be number,  input1 and input2 have to be filled both.
@@ -252,19 +236,11 @@ $(function() {
 ////                alert("null");
 //            }
 //        });
-
 //        alert($("#menuName").val());
 //        alert($("#item1").val());
 //        alert($("#price1").val());
 //        alert($("#item2").val());
 //        alert($("#price2").val());
-
-
-
-
-
-
-//
         $.ajax("{{=URL('default', 'addMenuList', user_signature=True)}}",
         {
           data: {
@@ -276,9 +252,6 @@ $(function() {
                 price2: $("#price2").val(),
                 itme3: $("#item3").val(),
                 price3: $("#price3").val(),
-
-
-
                 groupId: ractive.get('groupId'),
                 menuCreator: ractive.get('menuCreator'),
           },
@@ -286,24 +259,29 @@ $(function() {
           success: function(data) {
               ractive.set('displayMenu', data['displayMenu']);
               ractive.set('loading', false);
-//                $("input").each().val("");
               $('#menuForm')[0].reset();
               $("#myModal").modal('hide');
-
           },
           error: function() {}
-        }
-    );
+        });
+    });
 
+    ractive.on("showMenuDetail", function(e) {
 
+        var menuId = $(e.node).data("id");
 
+//        alert(menuId);
 
 
 
     });
 
+    function getMenuDetail(menuId) {
 
 
+
+
+    }
 
 
 
