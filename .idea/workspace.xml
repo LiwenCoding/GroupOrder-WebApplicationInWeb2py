@@ -45,21 +45,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.1875">
-              <caret line="15" column="76" selection-start-line="15" selection-start-column="70" selection-end-line="15" selection-end-column="76" />
+            <state vertical-scroll-proportion="1.7188499">
+              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="groupOrders.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="groupOrders.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.0511184">
-              <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+            <state vertical-scroll-proportion="-15.725">
+              <caret line="306" column="9" selection-start-line="306" selection-start-column="9" selection-end-line="306" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -81,10 +81,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/applications/GroupOrder/models/tables.py" />
-        <option value="$PROJECT_DIR$/applications/GroupOrder/views/default/index.html" />
         <option value="$PROJECT_DIR$/applications/GroupOrder/static/css/myapp.css" />
         <option value="$PROJECT_DIR$/applications/GroupOrder/controllers/default.py" />
         <option value="$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html" />
+        <option value="$PROJECT_DIR$/applications/GroupOrder/views/default/index.html" />
       </list>
     </option>
   </component>
@@ -716,10 +716,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/index.html">
+    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.1875">
-          <caret line="15" column="76" selection-start-line="15" selection-start-column="70" selection-end-line="15" selection-end-column="76" />
+        <state vertical-scroll-proportion="-15.725">
+          <caret line="306" column="9" selection-start-line="306" selection-start-column="9" selection-end-line="306" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -732,10 +732,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html">
+    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.0511184">
-          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.7188499">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding />
         </state>
       </provider>
