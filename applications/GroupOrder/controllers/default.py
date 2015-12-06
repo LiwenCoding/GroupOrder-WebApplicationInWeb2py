@@ -1,21 +1,15 @@
-# -*- coding: utf-8 -*-
-# this file is released under public domain and you can use without limitations
 
-#########################################################################
-## This is a sample controller
-## - index is the default action of any application
-## - user is required for authentication and authorization
-## - download is for downloading files uploaded in the db (does streaming)
-#########################################################################
-import json
+
+
 def index():
     return dict()
 
 
 
 def reset():
-  db(db.bulletinboards.id> 0).delete()
-  db(db.posts.id>0).delete()
+  db(db.Menus.id> 0).delete()
+  db(db.MenuDetails.id>0).delete()
+  db(db.Groups.id>0).delete()
   return
 
 
@@ -37,6 +31,9 @@ def createGroup():
                 'groupId': r.id}
          for r in rows}
     return response.json(dict(groupList=d))
+
+
+
 
 def groupOrders():
     groupId = request.args[0]
@@ -60,7 +57,7 @@ def addMenuList():
                     menuCreator = request.vars.menuCreator,
                     groupId = request.vars.groupId)
 
-    rows = db(db.Menus.groupId == request.vars.groupId).select()
+    rows = db(db.Menus.id > 0).select()
     thisMenu = rows.last()
 
     db.MenuDetails.insert(itemName = request.vars.item1,
@@ -75,7 +72,7 @@ def addMenuList():
                       itemPrice = request.vars.price3,
                       menuId = thisMenu.id)
 
-    rows = db(db.Menus.id > 0).select()
+    rows = db(db.Menus.groupId == request.vars.groupId).select()
     d = {r.id: {'menuName': r.menuName,
 
                 'MenuId': r.id}
