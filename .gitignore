@@ -5,6 +5,7 @@ errors/*
 sessions/*
 *.pyc
 *.bak
+.idea/workspace.xml
 
 
 
