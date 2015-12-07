@@ -108,8 +108,7 @@ def addOrder():
 
 def resetOrder():
     db(db.GroupOrders.id> 0).delete()
-
-
+    return
 
 
 
