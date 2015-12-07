@@ -1,5 +1,5 @@
 (dp1
-S'menuId'
+S'menuid'
 p2
 (dp3
 S'length'
@@ -22,9 +22,26 @@ sS'type'
 p10
 S'reference Menus'
 p11
-ssS'groupOrderCreator'
+ssS'groupid'
 p12
 (dp13
+g4
+I512
+sg5
+I00
+sg6
+I5
+sg7
+S'INTEGER REFERENCES Groups (id) ON DELETE CASCADE  '
+p14
+sg9
+I00
+sg10
+S'reference Groups'
+p15
+ssS'groupordercreator'
+p16
+(dp17
 g4
 I512
 sg5
@@ -33,15 +50,15 @@ sg6
 I2
 sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p14
+p18
 sg9
 I00
 sg10
 S'reference auth_user'
-p15
+p19
 ssS'id'
-p16
-(dp17
+p20
+(dp21
 g4
 I512
 sg5
@@ -50,14 +67,15 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p18
+p22
 sg9
 I00
 sg10
-g16
-ssS'groupOrderDeadline'
-p19
-(dp20
+S'id'
+p23
+ssS'grouporderdeadline'
+p24
+(dp25
 g4
 I512
 sg5
@@ -66,10 +84,10 @@ sg6
 I3
 sg7
 S'CHAR(512)'
-p21
+p26
 sg9
 I00
 sg10
 S'string'
-p22
+p27
 ss.

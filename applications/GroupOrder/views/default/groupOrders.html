@@ -201,10 +201,13 @@
 
     <div class="col-sm-9">
       <h1 class="page-header">GroupOrders</h1>
-      <div class="order_list">
+      <div class="board_list">
         {% #displayOrder:id %}
+        <div class="message col-sm-2 board title">
+            <li>{% groupOrderDeadline %}</li>
+            <li>{% menuId %}</li>
         {% /displayOrder %}
-      </div>
+        </div>
 
     </div>
   </div>
@@ -259,11 +262,11 @@
                 groupId: "{{=groupId}}",
                 menuCreator: "{{=auth.user_id}}",
                 displayMenuDetail: {},
-
+                displayOrder: {}
             }
         });
 
-        $.ajax("{{=URL('default', 'loadMenuList', user_signature=True)}}",
+        $.ajax("{{=URL('default', 'loadMenuOrderList', user_signature=True)}}",
                 {
                     data: {
                         groupId: ractive.get('groupId'),
@@ -272,6 +275,7 @@
                     success: function (data) {
                         ractive.set('displayMenu', data['displayMenu']);
                         ractive.set('loading', false);
+                        ractive.set('displayOrder', data['displayOrder']);
                     }
                 }
         );
@@ -336,7 +340,7 @@
             $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
                     {
                         data: {
-                            menuId: menuId,
+                            menuId: menuId
                         },
                         method: 'POST',
                         success: function (data) {
@@ -350,10 +354,26 @@
         }
 
         ractive.on("saveOrder", function(e) {
-//            var deadline = $('#datetimepicker2').data("DateTimePicker");
             var deadline = $('#datetime_input').val();
             var menuId = $("#menu_input option:selected").val();
             alert({{=auth.user_id}});
+            $.ajax("{{=URL('default', 'addOrder', user_signature=True)}}",
+                    {
+                        data: {
+                            deadline: deadline,
+                            menuId: menuId,
+                            groupId:ractive.get('groupId')
+                        },
+                        method: 'POST',
+                        success: function(data) {
+                            $('#bs-example-modal-lg-order').modal('hide');
+                        },
+                        error: function() {
+                            alert("Error!");
+                        }
+                    }
+
+            );
         });
 
     });

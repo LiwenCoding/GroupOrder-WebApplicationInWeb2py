@@ -33,7 +33,8 @@ db.define_table('MenuDetails',
 db.define_table('GroupOrders',
                 Field('groupOrderCreator', db.auth_user),
                 Field('groupOrderDeadline'),
-                Field('menuId', db.Menus))
+                Field('menuId', db.Menus),
+                Field('groupId', db.Groups))
 
 db.define_table('SingleOrder',
                 Field('singleOrderCreator', db.auth_user),

@@ -40,12 +40,17 @@ def groupOrders():
     return dict(groupId=groupId)
 
 
-def loadMenuList():
-    rows = db(db.Menus.groupId == request.vars.groupId).select()
-    d = {r.id: {'menuName': r.menuName,
+def loadMenuOrderList():
+    menu_rows = db(db.Menus.groupId == request.vars.groupId).select()
+    menu_d = {r.id: {'menuName': r.menuName,
                 'menuId': r.id}
-         for r in rows}
-    return response.json(dict(displayMenu=d))
+         for r in menu_rows}
+
+    order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
+    order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
+                      'menuId': r.menuId}
+               for r in order_rows}
+    return response.json(dict(displayMenu=menu_d, displayOrder=order_d))
 
 
 
@@ -68,9 +73,9 @@ def addMenuList():
                       itemPrice = request.vars.price2,
                      menuId = thisMenu.id)
 
-    db.MenuDetails.insert(itemName = request.vars.item3,
-                      itemPrice = request.vars.price3,
-                      menuId = thisMenu.id)
+    db.MenuDetails.insert(itemName=request.vars.item3,
+                      itemPrice=request.vars.price3,
+                      menuId=thisMenu.id)
 
     rows = db(db.Menus.groupId == request.vars.groupId).select()
 
@@ -91,15 +96,18 @@ def getMenuDetail():
 
 
 
+def addOrder():
+    db.GroupOrders.insert(groupOrderCreator=auth.user_id,
+                          groupOrderDeadline=request.vars.deadline,
+                          menuId=request.vars.menuId,
+                          groupId=request.vars.groupId)
+
+    return "ok"
 
 
 
-
-
-
-
-
-
+def resetOrder():
+    db(db.GroupOrders.id> 0).delete()
 
 
 
