@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2521c105-d0c0-4170-b5e3-a852df403e60" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/applications/GroupOrder/sessions/0e5/122/127.0.0.1-77266ee9-2876-4fc5-b44c-c4c95e75e8c2" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/applications/GroupOrder/sessions/0dc/1c9/127.0.0.1-6a79a526-1915-400b-b125-80d26dea0d68" afterPath="$PROJECT_DIR$/applications/GroupOrder/sessions/0dc/1c9/127.0.0.1-6a79a526-1915-400b-b125-80d26dea0d68" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/applications/GroupOrder/databases/storage.sqlite" afterPath="$PROJECT_DIR$/applications/GroupOrder/databases/storage.sqlite" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html" afterPath="$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/httpserver.log" afterPath="$PROJECT_DIR$/httpserver.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/applications/GroupOrder/views/layout.html" afterPath="$PROJECT_DIR$/applications/GroupOrder/views/layout.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/applications/GroupOrder/databases/sql.log" afterPath="$PROJECT_DIR$/applications/GroupOrder/databases/sql.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -33,10 +32,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="default.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="default.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/applications/GroupOrder/controllers/default.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.37037">
+            <state vertical-scroll-proportion="0.5010941">
               <caret line="88" column="23" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
               <folding />
             </state>
@@ -63,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="groupOrders.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="groupOrders.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.39491916">
-              <caret line="244" column="47" selection-start-line="244" selection-start-column="47" selection-end-line="244" selection-end-column="47" />
+            <state vertical-scroll-proportion="-4.0784316">
+              <caret line="355" column="37" selection-start-line="355" selection-start-column="37" selection-end-line="355" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -119,8 +118,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="37" />
-    <option name="y" value="61" />
+    <option name="x" value="-37" />
+    <option name="y" value="55" />
     <option name="width" value="1256" />
     <option name="height" value="829" />
   </component>
@@ -489,7 +488,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="37" y="61" width="1256" height="829" extended-state="0" />
+    <frame x="-37" y="55" width="1256" height="829" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -512,6 +511,14 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -702,22 +709,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/controllers/default.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.37037">
-          <caret line="88" column="23" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/models/tables.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/applications/GroupOrder/static/sass/myapp.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4712042">
@@ -730,14 +721,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.35714287">
           <caret line="11" column="14842" selection-start-line="11" selection-start-column="14842" selection-end-line="11" selection-end-column="14842" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9019608">
-          <caret line="51" column="14" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
           <folding />
         </state>
       </provider>
@@ -768,8 +751,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/groupOrders.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.39491916">
-          <caret line="244" column="47" selection-start-line="244" selection-start-column="47" selection-end-line="244" selection-end-column="47" />
+        <state vertical-scroll-proportion="-4.0784316">
+          <caret line="355" column="37" selection-start-line="355" selection-start-column="37" selection-end-line="355" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/views/default/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.9019608">
+          <caret line="51" column="14" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/models/tables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/applications/GroupOrder/controllers/default.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5010941">
+          <caret line="88" column="23" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
           <folding />
         </state>
       </provider>

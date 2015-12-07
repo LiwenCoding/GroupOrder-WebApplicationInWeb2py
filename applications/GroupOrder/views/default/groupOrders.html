@@ -146,16 +146,16 @@
       <div class="modal-body">
 
         <br><br>
-        <select class="form-control">
+        <select class="form-control" id="menu_input">
           {% #displayMenu:id %}
-          <option data-id="{%id%}">{% menuName %}</option>
+          <option value="{%id%}">{% menuName %}</option>
           {% /displayMenu %}
         </select>
 
         <br><br>
         <div class="form-group">
             <div class='input-group date' id='datetimepicker2'>
-                <input type='text' class="form-control" />
+                <input type='text' id="datetime_input" class="form-control" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -349,51 +349,12 @@
 
         }
 
-/*
-        ko.bindingHandlers.dateTimePicker = {
-            init: function (element, valueAccessor, allBindingsAccessor) {
-                //initialize datepicker with some optional options
-                var options = allBindingsAccessor().dateTimePickerOptions || {};
-                $(element).datetimepicker(options);
-
-                //when a user changes the date, update the view model
-                ko.utils.registerEventHandler(element, "dp.change", function (event) {
-                    var value = valueAccessor();
-                    if (ko.isObservable(value)) {
-                        if (event.date != null && !(event.date instanceof Date)) {
-                            value(event.date.toDate());
-                        } else {
-                            value(event.date);
-                        }
-                    }
-                });
-
-                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                    var picker = $(element).data("DateTimePicker");
-                    if (picker) {
-                        picker.destroy();
-                    }
-                });
-            },
-            update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-
-                var picker = $(element).data("DateTimePicker");
-                //when the view model is updated, update the widget
-                if (picker) {
-                    var koDate = ko.utils.unwrapObservable(valueAccessor());
-
-                    //in case return from server datetime i am get in this form for example /Date(93989393)/ then fomat this
-                    koDate = (typeof (koDate) !== 'object') ? new Date(parseFloat(koDate.replace(/[^0-9]/g, ''))) : koDate;
-
-                    picker.date(koDate);
-                }
-            }
-        };
-*/
-
-        function saveOrder(){
-
-        }
+        ractive.on("saveOrder", function(e) {
+//            var deadline = $('#datetimepicker2').data("DateTimePicker");
+            var deadline = $('#datetime_input').val();
+            var menuId = $("#menu_input option:selected").val();
+            alert({{=auth.user_id}});
+        });
 
     });
 </script>
