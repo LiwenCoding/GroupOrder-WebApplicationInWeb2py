@@ -48,7 +48,10 @@ def loadMenuOrderList():
 
     order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
     order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
-                      'menuId': r.menuId}
+                      'menuId': r.menuId,
+                      'creatorFirstName': r.creatorLastName,
+                      'menuName': r.menuName,
+                      }
                for r in order_rows}
     return response.json(dict(displayMenu=menu_d, displayOrder=order_d))
 
@@ -97,9 +100,12 @@ def getMenuDetail():
 
 
 def addOrder():
-    creatorFirst = db(db.auth_user.id == auth.user_id).select(db.auth_user.first_name)
-    creatorLast = db(db.auth_user.id == auth.user_id).select(db.auth_user.last_name)
-    menuName = db(db.Menus.id == request.vars.menuId).select(db.Menus.menuName)
+    creatorFirsts = db(db.auth_user.id == auth.user_id).select()
+    creatorLasts = db(db.auth_user.id == auth.user_id).select()
+    menuNames = db(db.Menus.id == request.vars.menuId).select()
+    creatorFirst = creatorFirsts[0].first_name
+    creatorLast = creatorLasts[0].last_name
+    menuName = menuNames[0].menuName
     db.GroupOrders.insert(groupOrderCreator=auth.user_id,
                           creatorFirstName=creatorFirst,
                           creatorLastName=creatorLast,
