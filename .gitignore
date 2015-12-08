@@ -10,5 +10,6 @@ prameters_8000.py
 httpserver.pid
 httpserver.log
 applications/GroupOrder/databases/sql.log
-
+applications/GroupOrder/sessions/*
+applications/GroupOrder/databases/*
 
