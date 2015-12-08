@@ -11,15 +11,6 @@
     {{=A('Sign Up', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['register']))}}
     {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
     </div>
-    {{else:}}
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg-menu">
-     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Menu
-    </button>
-
-    <button type="button" class="btn btn-primary btn-lg" data-target=".bs-example-modal-lg-order" onclick="javascript:showModal();">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create an order
-    </button>
-
     {{pass}}
     {% #if loading %}
     <div id="load_spinner">
@@ -29,7 +20,38 @@
 </div>
 <br><br>
 
+<div class="container-fluid">
+  <div class="row">
 
+<table class="table table-bordered">
+  <thead>
+      <tr>
+        <th class="col-md-1">#</th>
+        <th class="col-md-9">Item</th>
+        <th class="col-md-1">Price</th>
+        <th class="col-md-1">Quantity</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% #displayMenuDetail:id %}
+      <tr>
+        <td>1</td>
+        <td>{% itemName %}</td>
+        <td>{% itemPrice %}</td>
+        <td><div class="input-group">
+            <input type="number" class="form-control" id="exampleInputAmount" placeholder="Quantity"></div>
+        </td>
+      </tr>
+      {% /displayMenuDetail %}
+  <tbody>
+</table>
+
+
+
+
+
+  </div>
+</div>
 
 
 </script>
@@ -47,10 +69,30 @@
             tripleDelimiters: ['{%%', '%%}'],
             data: {
                 loading: true,
+                menuId: "{{=menuId}}",
+                displayMenuDetail: {},
+
 
             }
         });
+
+
+
+        $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
+            {
+                data: {
+                    menuId: ractive.get('menuId'),
+                },
+                method: 'POST',
+                success: function (data) {
+                    ractive.set('displayMenuDetail', data['displayMenuDetail']);
+                    ractive.set('loading', false);
+                }
+            }
+        );
     });
+
+
 </script>
 
 

@@ -131,8 +131,8 @@ def resetOrder():
 
 
 def singleOrders():
-    return dict()
-
+    menuId = request.args[0]
+    return dict(menuId=menuId)
 
 
 
