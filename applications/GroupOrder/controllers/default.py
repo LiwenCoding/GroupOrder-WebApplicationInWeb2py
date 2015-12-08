@@ -114,7 +114,14 @@ def addOrder():
                           menuName=menuName,
                           groupId=request.vars.groupId)
 
-    return "ok"
+    order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
+    order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
+                      'menuId': r.menuId,
+                      'creatorFirstName': r.creatorLastName,
+                      'menuName': r.menuName,
+                      }
+               for r in order_rows}
+    return response.json(dict(displayOrder=order_d))
 
 
 

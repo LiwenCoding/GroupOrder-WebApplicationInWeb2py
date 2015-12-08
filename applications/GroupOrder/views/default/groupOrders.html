@@ -205,7 +205,6 @@
         {% #displayOrder:id %}
         <div class="message col-sm-2 board title">
             <li>{% groupOrderDeadline %}</li>
-            <li>{% menuId %}</li>
             <li>{% menuName %}</li>
             <li>{% creatorFirstName %}</li>
 
@@ -332,7 +331,7 @@
 
             var menuId = $(e.node).data("id");
 
-            alert(menuId);
+//            alert(menuId);
             getMenuDetail(menuId);
 
 
@@ -369,7 +368,10 @@
                         },
                         method: 'POST',
                         success: function(data) {
+
                             $('#bs-example-modal-lg-order').modal('hide');
+                            ractive.set('displayOrder', data['displayOrder']);
+                            ractive.set('loading', false);
                         },
                         error: function() {
                             alert("Error!");
