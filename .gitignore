@@ -6,7 +6,9 @@ sessions/*
 *.pyc
 *.bak
 .idea/workspace.xml
-
-
+prameters_8000.py
+httpserver.pid
+httpserver.log
+applications/GroupOrder/databases/sql.log
 
 
