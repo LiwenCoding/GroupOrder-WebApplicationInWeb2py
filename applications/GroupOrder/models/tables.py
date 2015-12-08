@@ -48,5 +48,7 @@ db.define_table('SingleOrder',
                 Field('orderPrice'),
                 Field('status'))
 
-
+db.define_table('JoinGroupRequest',
+                Field('applicantId', db.auth_user.id),
+                Field('groupId'))
 
