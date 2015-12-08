@@ -130,6 +130,17 @@ def resetOrder():
     return
 
 
+def singleOrders():
+    return dict()
+
+
+
+
+
+
+
+
+
 
 
 def user():

@@ -1,0 +1,58 @@
+{{extend 'layout.html'}}
+
+<div id="target"></div>
+
+
+<script id="template" type="text/ractive">
+
+<div>
+    {{if auth.user_id is None:}}
+    <div id="main_login">
+    {{=A('Sign Up', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['register']))}}
+    {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
+    </div>
+    {{else:}}
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg-menu">
+     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Menu
+    </button>
+
+    <button type="button" class="btn btn-primary btn-lg" data-target=".bs-example-modal-lg-order" onclick="javascript:showModal();">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create an order
+    </button>
+
+    {{pass}}
+    {% #if loading %}
+    <div id="load_spinner">
+    <i class="fa fa-spinner fa-pulse fa-2x"></i>
+    </div>
+    {% /if %}
+</div>
+<br><br>
+
+
+
+
+</script>
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var ractive = new Ractive({
+            el: '#target',
+            template: '#template',
+            delimiters: ['{%', '%}'],
+            tripleDelimiters: ['{%%', '%%}'],
+            data: {
+                loading: true,
+
+            }
+        });
+    });
+</script>
+
+
+
+

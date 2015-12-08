@@ -39,7 +39,7 @@ db.define_table('GroupOrders',
                 Field('menuName'),
                 Field('groupId', db.Groups))
 
-db.define_table('SingleOrder',
+db.define_table('SingleOrders',
                 Field('singleOrderCreator', db.auth_user),
                 Field('orderId', db.GroupOrders),
                 Field('orderList'),
