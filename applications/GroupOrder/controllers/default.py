@@ -97,9 +97,15 @@ def getMenuDetail():
 
 
 def addOrder():
+    creatorFirst = db(db.auth_user.id == auth.user_id).select(db.auth_user.first_name)
+    creatorLast = db(db.auth_user.id == auth.user_id).select(db.auth_user.last_name)
+    menuName = db(db.Menus.id == request.vars.menuId).select(db.Menus.menuName)
     db.GroupOrders.insert(groupOrderCreator=auth.user_id,
+                          creatorFirstName=creatorFirst,
+                          creatorLastName=creatorLast,
                           groupOrderDeadline=request.vars.deadline,
                           menuId=request.vars.menuId,
+                          menuName=menuName,
                           groupId=request.vars.groupId)
 
     return "ok"

@@ -32,8 +32,11 @@ db.define_table('MenuDetails',
 
 db.define_table('GroupOrders',
                 Field('groupOrderCreator', db.auth_user),
+                Field('creatorFirstName'),
+                Field('creatorLastName'),
                 Field('groupOrderDeadline'),
                 Field('menuId', db.Menus),
+                Field('menuName'),
                 Field('groupId', db.Groups))
 
 db.define_table('SingleOrder',
@@ -41,7 +44,8 @@ db.define_table('SingleOrder',
                 Field('orderId', db.GroupOrders),
                 Field('orderList'),
                 Field('orderQuantity'),
-                Field('orderPrice'))
+                Field('orderPrice'),
+                Field('status'))
 
 
 
