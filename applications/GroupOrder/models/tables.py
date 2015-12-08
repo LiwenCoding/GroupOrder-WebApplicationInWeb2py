@@ -18,7 +18,8 @@ from datetime import datetime,timedelta
 
 db.define_table('Groups',
                 Field('groupName'),
-                Field('groupCreator', db.auth_user))
+                Field('groupCreator', db.auth_user),
+                Field('groupAccessId'))
 
 db.define_table('Menus',
                 Field('menuName'),

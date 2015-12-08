@@ -2,6 +2,8 @@
 
 
 def index():
+    # if request.args[0] is not None:
+        # response.flash = T("Hello World")
     return dict()
 
 
@@ -24,8 +26,14 @@ def loadGroup():
 
 @auth.requires_signature()
 def createGroup():
+    group_access_id = auth.add_group('admin', request.vars.groupName)
     db.Groups.insert(groupName = request.vars.groupName,
-                     groupCreator = request.vars.groupCreator)
+                     groupCreator = request.vars.groupCreator,
+                     groupAccessId=group_access_id)
+    auth.add_membership(group_access_id, auth.user_id)
+    logger.info(group_access_id)
+    logger.info(auth.user_group(auth.user_id))
+
     rows = db(db.Groups.id > 0).select()
     d = {r.id: {'groupName': r.groupName,
                 'groupId': r.id}
@@ -37,8 +45,20 @@ def createGroup():
 
 def groupOrders():
     groupId = request.args[0]
-    return dict(groupId=groupId)
+    group_access_ids = db(db.Groups.id == groupId).select()
+    group_access_id= group_access_ids[0].groupAccessId
+    logger.info(group_access_id)
+    if not (auth.has_membership(group_access_id, auth.user_id, 'general') or auth.has_membership(group_access_id, auth.user_id, 'admin')):
+        # redirect(URL('default', 'requestGroupMembership', args=[groupId, group_access_id]))
+        session.flash = T("Authorization required")
+        redirect(URL('default', 'index', args=[groupId]))
+    return dict(groupId=groupId,)
 
+
+def requestGroupMembership():
+
+    # redirect(URL('default', 'index'))
+    return "ok"
 
 def loadMenuOrderList():
     menu_rows = db(db.Menus.groupId == request.vars.groupId).select()
