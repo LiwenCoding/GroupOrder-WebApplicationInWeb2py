@@ -12,4 +12,5 @@ httpserver.log
 applications/GroupOrder/databases/sql.log
 applications/GroupOrder/sessions/*
 applications/GroupOrder/databases/*
-
+applications/GroupOrder/errors/*
+applications/admin/sessions/
