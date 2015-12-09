@@ -36,7 +36,7 @@
       {% #displayMenuDetail:id %}
       <tr>
         <td class="itemIdData">{% itemId %}</td>
-        <td>{% itemName %}</td>
+        <td class="itemNameData">{% itemName %}</td>
         <td class="itemPriceData">{% itemPrice %}</td>
         <td><div class="input-group">
             <input type="number" class="form-control" id="itemQuantityData" placeholder="0"></div>
@@ -72,6 +72,8 @@ $(document).ready(function () {
             loading: true,
             menuId: "{{=menuId}}",
             displayMenuDetail: {},
+            singleOrderCreator: "{{=auth.user_id}}",
+
 
 
 
@@ -94,7 +96,7 @@ $(document).ready(function () {
     );
 
     ractive.on("submitOrder", function() {
-        var idArray = [];
+        var nameArray = [];
         var priceArray = [];
         var inputArray = [];
 
@@ -102,18 +104,41 @@ $(document).ready(function () {
             inputArray.push($(this).val());
         });
 
-        $(".itemIdData").each(function() {
-            idArray.push($(this).html());
+        $(".itemNameData").each(function() {
+            nameArray.push($(this).html());
         });
 
         $(".itemPriceData").each(function() {
             priceArray.push($(this).html());
         });
 
-        alert(idArray[2]);
-        alert(inputArray[2]);
-        alert(priceArray[0]);
+//        alert(nameArray[1]);
+//        alert(inputArray[1]);
+//        alert(priceArray[1]);
+//          alert((inputArray[0]*priceArray[0]));
+//
+        $.ajax("{{=URL('default', 'addSingleOrders', user_signature=True)}}",
+        {
+            data: {
+                itemName1: nameArray[0],
+                itemPrice1: priceArray[0],
+                itemQuantity1: inputArray[0],
+                itemName2: nameArray[1],
+                itemPrice2: priceArray[1],
+                itemQuantity2: inputArray[1],
+                itemName3: nameArray[2],
+                itemPrice3: priceArray[2],
+                itemQuantity3: inputArray[2],
+                singleOrderCreator: ractive.get('singleOrderCreator'),
+                status: "pending",
 
+            },
+            method: 'POST',
+            success: function () {
+            },
+            error: function () {
+            }
+        });
 
     });
 

@@ -135,6 +135,10 @@ def singleOrders():
     return dict(menuId=menuId)
 
 
+def addSingleOrders():
+
+
+    return "ok"
 
 
 

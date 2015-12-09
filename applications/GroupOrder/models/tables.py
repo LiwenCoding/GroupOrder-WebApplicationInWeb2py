@@ -42,9 +42,9 @@ db.define_table('GroupOrders',
 db.define_table('SingleOrders',
                 Field('singleOrderCreator', db.auth_user),
                 Field('orderId', db.GroupOrders),
-                Field('itemId'),
+                Field('itemName'),
+                Field('itemPrice'),
                 Field('itemQuantity'),
-                Field('orderPrice'),
                 Field('status', requires=IS_IN_SET('pending', 'success', 'failure')))
 
 
