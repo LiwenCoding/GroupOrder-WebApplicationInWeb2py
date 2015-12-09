@@ -1,0 +1,128 @@
+{{extend 'layout.html'}}
+<div id="target"></div>
+
+<script id="template" type="text/ractive">
+
+<div class="container">
+  <h2>Administrate My Groups</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Group Name</th>
+        <th style="color:blue">Creator</th>
+        <th>Applicant</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% #controlList: id %}
+      <tr>
+        <td>{% groupName %}</td>
+        <td style="color:blue">{% groupCreatorName %}</td>
+        <td>{% applicantName %}</td>
+        <td>{% status %}</td>
+
+        {% #if status == 'pending'%}
+        <td>
+            <button type="button" value={%id%} class="btn btn-default" on-click="approveRequest">Approve</button>
+            <button type="button" value={%id%} class="btn btn-default" on-click="rejectRequest">Reject</button>
+        </td>
+        {% else %}
+        <td>
+            <button type="button" class="btn btn-default" disabled="disabled">Approve</button>
+            <button type="button" class="btn btn-default" disabled="disabled">Reject</button>
+        </td>
+        {% /if %}
+      </tr>
+      {% /controlList %}
+    </tbody>
+  </table>
+</div>
+<br><br><br>
+
+
+<div class="container">
+  <h2>My Requests</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Group Name</th>
+        <th>Creator</th>
+        <th style="color:blue">Applicant</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% #requestList: id %}
+      <tr>
+        <td>{% groupName %}</td>
+        <td>{% groupCreatorName %}</td>
+        <td style="color:blue">{% applicantName %}</td>
+        <td>{% status %}</td>
+      </tr>
+      {% /requestList %}
+    </tbody>
+  </table>
+</div>
+
+</script>
+
+
+<script>
+$(function() {
+    var ractive = new Ractive({
+        el: '#target',
+        template: '#template',
+        delimiters: ['{%', '%}'],
+        tripleDelimiters: ['{%%', '%%}'],
+        data: {
+            controlList: {},
+            requestList: {}
+        }
+    });
+
+    $.ajax( "{{=URL('default', 'loadRequest', user_signature=True)}}",
+            {
+                method: 'POST',
+                success: function (data){
+                    ractive.set('controlList', data['controlList']);
+                    ractive.set('requestList', data['requestList']);
+                }
+            }
+
+    );
+
+    ractive.on("approveRequest", function (e) {
+        requestId = $(e.node).val();
+        $.ajax( "{{=URL('default', 'approveRequest', user_signature=True)}}",
+                {
+                    data: {
+                       requestId: $(e.node).val()
+                    },
+                    method: 'POST',
+                    success: function (data){
+                        ractive.set('controlList', data['controlList']);
+                    }
+                }
+
+        );
+    });
+
+    ractive.on("rejectRequest", function (e) {
+        requestId = $(e.node).val();
+        $.ajax( "{{=URL('default', 'rejectRequest', user_signature=True)}}",
+                {
+                    data: {
+                       requestId: $(e.node).val()
+                    },
+                    method: 'POST',
+                    success: function (data){
+                        ractive.set('controlList', data['controlList']);
+                    }
+                }
+
+        );
+    });
+});
+</script>

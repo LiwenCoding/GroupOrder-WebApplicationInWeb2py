@@ -50,7 +50,10 @@ db.define_table('SingleOrder',
 
 db.define_table('JoinGroupRequest',
                 Field('applicantId', db.auth_user),
+                Field('applicantName'),
                 Field('groupId', db.Groups),
+                Field('groupName'),
                 Field('groupAccessId'),
                 Field('groupCreatorId'),
-                Field('status',requires=IS_IN_SET('pending', 'approve', 'disapprove')))
+                Field('groupCreatorName'),
+                Field('status',requires=IS_IN_SET('pending', 'approved', 'rejected')))
