@@ -161,9 +161,31 @@ def addSingleOrders():
                        itemPrice = request.vars.itemPrice3,
                        itemQuantity = request.vars.itemQuantity3)
 
-    return "ok"
+    order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
+    d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
+                'itemName': r.itemName,
+                'itemPrice': r.itemPrice,
+                'itemQuantity': r.itemQuantity,
+                'status': r.status,
+                'groupOrderId': r.id,
+                }
+               for r in order_rows}
+    return response.json(dict(displayOrderDetail=d))
 
 
+
+def getOrderDetail():
+
+    order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
+    d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
+                'itemName': r.itemName,
+                'itemPrice': r.itemPrice,
+                'itemQuantity': r.itemQuantity,
+                'status': r.status,
+                'groupOrderId': r.id,
+                }
+               for r in order_rows}
+    return response.json(dict(displayOrderDetail=d))
 
 
 

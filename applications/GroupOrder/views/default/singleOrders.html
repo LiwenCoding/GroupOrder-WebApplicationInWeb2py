@@ -23,7 +23,14 @@
 <div class="container-fluid">
   <div class="row">
 
-  <div></div>
+  <div>
+        {% #displayOrderDetail:id %}
+        <li>{% itemName %}</li>
+        <li>{% itemPrice %}</li>
+        <li>{% itemQuantity %}</li>
+        <li>{% creatorFirstName %}
+        {% /displayOrderDetail %}
+  </div>
 
 
 
@@ -78,6 +85,7 @@ $(document).ready(function () {
             displayMenuDetail: {},
             singleOrderCreator: "{{=auth.user_id}}",
             groupOrderId: "{{=groupOrderId}}",
+            displayOrderDetail: {},
 
 
 
@@ -98,6 +106,23 @@ $(document).ready(function () {
             }
         }
     );
+
+
+    $.ajax("{{=URL('default', 'getOrderDetail', user_signature=True)}}",
+    {
+        data: {
+            groupOrderId: ractive.get('groupOrderId'),
+        },
+        method: 'POST',
+        success: function (data) {
+            ractive.set('displayOrderDetail', data['displayOrderDetail']);
+            ractive.set('loading', false);
+        }
+    }
+    );
+
+
+
 
     ractive.on("submitOrder", function() {
         var nameArray = [];
@@ -139,7 +164,9 @@ $(document).ready(function () {
 
             },
             method: 'POST',
-            success: function () {
+            success: function (data) {
+                ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                ractive.set('loading', false);
             },
             error: function () {
             }
