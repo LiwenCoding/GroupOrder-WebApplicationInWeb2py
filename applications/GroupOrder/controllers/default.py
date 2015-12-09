@@ -63,7 +63,7 @@ def loadMenuOrderList():
     order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
     order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
                       'menuId': r.menuId,
-                      'creatorFirstName': r.creatorLastName,
+                      'creatorFirstName': r.creatorFirstName,
                       'menuName': r.menuName,
                       'groupOrderId': r.id,
                       }
