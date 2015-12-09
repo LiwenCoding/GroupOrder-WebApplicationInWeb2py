@@ -71,7 +71,7 @@ sg9
 I00
 sg10
 g11
-ssS'id'
+ssS'groupid'
 p22
 (dp23
 g4
@@ -79,14 +79,14 @@ I512
 sg5
 I00
 sg6
-I1
+I8
 sg7
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
+S'INTEGER REFERENCES Groups (id) ON DELETE CASCADE  '
 p24
 sg9
 I00
 sg10
-S'id'
+S'reference Groups'
 p25
 ssS'groupordercreator'
 p26
@@ -105,7 +105,7 @@ I00
 sg10
 S'reference auth_user'
 p29
-ssS'groupid'
+ssS'id'
 p30
 (dp31
 g4
@@ -113,14 +113,14 @@ I512
 sg5
 I00
 sg6
-I8
+I1
 sg7
-S'INTEGER REFERENCES Groups (id) ON DELETE CASCADE  '
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p32
 sg9
 I00
 sg10
-S'reference Groups'
+S'id'
 p33
 ssS'creatorfirstname'
 p34
