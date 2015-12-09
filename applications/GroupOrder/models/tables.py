@@ -41,7 +41,7 @@ db.define_table('GroupOrders',
 
 db.define_table('SingleOrders',
                 Field('singleOrderCreator', db.auth_user),
-                Field('orderId', db.GroupOrders),
+                Field('groupOrderId', db.GroupOrders),
                 Field('itemName'),
                 Field('itemPrice'),
                 Field('itemQuantity'),

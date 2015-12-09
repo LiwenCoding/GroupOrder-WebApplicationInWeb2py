@@ -51,6 +51,7 @@ def loadMenuOrderList():
                       'menuId': r.menuId,
                       'creatorFirstName': r.creatorLastName,
                       'menuName': r.menuName,
+                      'groupOrderId': r.id,
                       }
                for r in order_rows}
     return response.json(dict(displayMenu=menu_d, displayOrder=order_d))
@@ -119,6 +120,7 @@ def addOrder():
                       'menuId': r.menuId,
                       'creatorFirstName': r.creatorLastName,
                       'menuName': r.menuName,
+                      'groupOrderId': r.id,
                       }
                for r in order_rows}
     return response.json(dict(displayOrder=order_d))
@@ -132,11 +134,32 @@ def resetOrder():
 
 def singleOrders():
     menuId = request.args[0]
-    return dict(menuId=menuId)
+    groupOrderId = request.args[1]
+    return dict(menuId=menuId,groupOrderId=groupOrderId)
 
 
 def addSingleOrders():
 
+    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+                           status = request.vars.status,
+                           groupOrderId = request.vars.groupOrderId,
+                           itemName = request.vars.itemName1,
+                           itemPrice = request.vars.itemPrice1,
+                           itemQuantity = request.vars.itemQuantity1)
+
+    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+                       status = request.vars.status,
+                       groupOrderId = request.vars.groupOrderId,
+                       itemName = request.vars.itemName2,
+                       itemPrice = request.vars.itemPrice2,
+                       itemQuantity = request.vars.itemQuantity2)
+
+    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+                       status = request.vars.status,
+                       groupOrderId = request.vars.groupOrderId,
+                       itemName = request.vars.itemName3,
+                       itemPrice = request.vars.itemPrice3,
+                       itemQuantity = request.vars.itemQuantity3)
 
     return "ok"
 

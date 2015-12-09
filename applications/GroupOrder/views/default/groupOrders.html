@@ -203,8 +203,9 @@
       <h1 class="page-header">GroupOrders</h1>
       <div class="board_list">
         {% #displayOrder:id %}
-                <a class="link" href="{{=URL('default', 'singleOrders')}}/{% menuId %}">
+                <a class="link" href="{{=URL('default', 'singleOrders')}}/{% menuId %}/{% groupOrderId %}">
             <div class="message col-sm-2 board title">
+                <li>{% groupOrderId %}</li>
                 <li>{% groupOrderDeadline %}</li>
                 <li>{% menuName %}</li>
                 <li>{% creatorFirstName %}</li>
@@ -358,7 +359,7 @@
         ractive.on("saveOrder", function(e) {
             var deadline = $('#datetime_input').val();
             var menuId = $("#menu_input option:selected").val();
-            alert({{=auth.user_id}});
+//            alert({{=auth.user_id}});
             $.ajax("{{=URL('default', 'addOrder', user_signature=True)}}",
                     {
                         data: {
