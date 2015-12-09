@@ -43,6 +43,33 @@
   </div>
 </div>
 
+
+<!-- request to join a group -->
+<div class="container">
+  <div class="row">
+
+    <div class="col-lg-2">Send request to group:</div>
+    <div class="col-lg-4">
+     <select class="form-control" id="group_select">
+      {% #groupList:id %}
+      <option value="{% id %}">{% groupName %}</option>
+      {% /groupList %}
+    </select>
+   </div>
+   <button type="button" class="btn btn-primary" on-click="sendJoinRequest">Send</button>
+
+   <a class="link" href="{{=URL('default', 'manage')}}">
+     <button type="button" class="btn btn-default" aria-label="Left Align">
+       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+     </button>
+   </a>
+
+  </div>
+</div>
+<br><br>
+
+
+<!-- display group boards -->
 <div class="container">
   <div class="row">
     <div class="board_list">
@@ -116,6 +143,28 @@ $(function() {
               error: function() {}
             });
         }
+    });
+
+    ractive.on("sendJoinRequest", function() {
+        var groupId = $('#group_select option:selected').val();
+        $.ajax("{{=URL('default', 'sendRequest', user_signature=True)}}",
+                {
+                    data: {
+                        groupId: groupId
+                    },
+                    method: 'POST',
+                    success: function(data) {
+                        if (data['insert']) {
+                            alert("Request successfully sent!");
+                        }
+                        else {
+                            alert("Request already exists or not necessary!")
+                        }
+                    },
+                    error: function() {}
+                }
+
+        );
     });
 
 });

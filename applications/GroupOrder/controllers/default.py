@@ -24,8 +24,14 @@ def loadGroup():
 
 @auth.requires_signature()
 def createGroup():
+    group_access_id = auth.add_group('general', request.vars.groupName)
     db.Groups.insert(groupName = request.vars.groupName,
-                     groupCreator = request.vars.groupCreator)
+                     groupCreator = request.vars.groupCreator,
+                     groupAccessId=group_access_id)
+    auth.add_membership(group_access_id, auth.user_id)
+    logger.info(group_access_id)
+    logger.info(auth.user_group(auth.user_id))
+
     rows = db(db.Groups.id > 0).select()
     d = {r.id: {'groupName': r.groupName,
                 'groupId': r.id}
@@ -34,12 +40,20 @@ def createGroup():
 
 
 
-
+@auth.requires_login()
 def groupOrders():
     groupId = request.args[0]
-    return dict(groupId=groupId)
+    group_entry = db(db.Groups.id == groupId).select()
+    group_access_id= group_entry[0].groupAccessId
+    logger.info(group_access_id)
+    if not (auth.has_membership(group_access_id, auth.user_id, 'general') or auth.has_membership(group_access_id, auth.user_id, 'admin')):
+        # redirect(URL('default', 'requestGroupMembership', args=[groupId, group_access_id]))
+        session.flash = T("Authorization required")
+        redirect(URL('default', 'index'))
+    return dict(groupId=groupId,)
 
 
+@auth.requires_signature()
 def loadMenuOrderList():
     menu_rows = db(db.Menus.groupId == request.vars.groupId).select()
     menu_d = {r.id: {'menuName': r.menuName,
@@ -57,7 +71,7 @@ def loadMenuOrderList():
     return response.json(dict(displayMenu=menu_d, displayOrder=order_d))
 
 
-
+@auth.requires_signature()
 def addMenuList():
 
     # menuList = json.load(request.vars.menuList)
@@ -90,6 +104,7 @@ def addMenuList():
     return response.json(dict(displayMenu=d))
 
 
+@auth.requires_signature()
 def getMenuDetail():
     rows = db(db.MenuDetails.menuId == request.vars.menuId).select()
     d = {r.id: {'itemName': r.itemName,
@@ -99,7 +114,7 @@ def getMenuDetail():
     return response.json(dict(displayMenuDetail=d))
 
 
-
+@auth.requires_signature()
 def addOrder():
     creatorFirsts = db(db.auth_user.id == auth.user_id).select()
     creatorLasts = db(db.auth_user.id == auth.user_id).select()
@@ -126,7 +141,7 @@ def addOrder():
     return response.json(dict(displayOrder=order_d))
 
 
-
+@auth.requires_signature()
 def resetOrder():
     db(db.GroupOrders.id> 0).delete()
     return
@@ -189,6 +204,124 @@ def getOrderDetail():
 
 
 
+
+@auth.requires_signature()
+def resetRequest():
+    db(db.JoinGroupRequest.id > 0).delete()
+    return
+
+
+@auth.requires_login()
+def sendRequest():
+    groupId = request.vars.groupId
+    logger.info("request for " + groupId)
+    logger.info(auth.user_id)
+    requestTableEntry = db((db.JoinGroupRequest.applicantId == auth.user_id) & (db.JoinGroupRequest.groupId == groupId)).select().first()
+    logger.info(requestTableEntry)
+    if requestTableEntry is not None:
+        logger.info("request already made!")
+        return response.json(dict(insert=False))
+    group_entry = db(db.Groups.id == groupId).select()
+    group_access_id = group_entry[0].groupAccessId
+    group_creator_id = group_entry[0].groupCreator
+    group_name = group_entry[0].groupName
+    if group_creator_id == auth.user_id:
+        logger.info("requester is creator!")
+        return response.json(dict(insert=False))
+
+    requester_name = db(db.auth_user.id == auth.user_id).select(db.auth_user.first_name)[0].first_name
+    creator_name = db(db.auth_user.id == group_creator_id).select(db.auth_user.first_name)[0].first_name
+
+    logger.info("requester name: " + requester_name)
+    logger.info("creator name: " + creator_name)
+    logger.info("group name: " + group_name)
+
+    db.JoinGroupRequest.insert(applicantId=auth.user_id,
+                               applicantName=requester_name,
+                               groupId=groupId,
+                               groupName=group_name,
+                               groupAccessId=group_access_id,
+                               groupCreatorId=group_creator_id,
+                               groupCreatorName=creator_name,
+                               status='pending')
+    return response.json(dict(insert=True))
+
+
+@auth.requires_login()
+def manage():
+    logger.info("in manage page")
+    # auth.user_id
+    return dict()
+
+
+@auth.requires_signature()
+def loadRequest():
+    rows_control = db(db.JoinGroupRequest.groupCreatorId == auth.user_id).select()
+    d_control = {r.id: {'groupName': r.groupName,
+                        'groupId': r.groupId,
+                        'groupAccessId': r.groupAccessId,
+                        'groupCreatorId': r.groupCreatorId,
+                        'groupCreatorName': r.groupCreatorName,
+                        'applicantId': r.applicantId,
+                        'applicantName': r.applicantName,
+                        'status': r.status
+                        }
+                 for r in rows_control}
+    logger.info(len(d_control))
+
+    rows_request = db(db.JoinGroupRequest.applicantId == auth.user_id).select()
+    d_request = {r.id: {'groupName': r.groupName,
+                        'groupId': r.groupId,
+                        'groupAccessId': r.groupAccessId,
+                        'groupCreatorId': r.groupCreatorId,
+                        'groupCreatorName': r.groupCreatorName,
+                        'applicantId': r.applicantId,
+                        'applicantName': r.applicantName,
+                        'status': r.status
+                        }
+                 for r in rows_request}
+    return response.json(dict(controlList=d_control, requestList=d_request))
+
+
+@auth.requires_signature()
+def approveRequest():
+    request_id = request.vars.requestId
+    request_entry = db(db.JoinGroupRequest.id == request_id).select().first()
+    # logger.info(request_entry.applicantName)
+    # logger.info(request_entry.groupName)
+    auth.add_membership(request_entry.groupAccessId, request_entry.applicantId)
+    db(db.JoinGroupRequest.id == request_id).update(status="approved")
+
+    rows_control = db(db.JoinGroupRequest.groupCreatorId == auth.user_id).select()
+    d_control = {r.id: {'groupName': r.groupName,
+                        'groupId': r.groupId,
+                        'groupAccessId': r.groupAccessId,
+                        'groupCreatorId': r.groupCreatorId,
+                        'groupCreatorName': r.groupCreatorName,
+                        'applicantId': r.applicantId,
+                        'applicantName': r.applicantName,
+                        'status': r.status
+                        }
+                 for r in rows_control}
+    return response.json(dict(controlList=d_control))
+
+
+@auth.requires_signature()
+def rejectRequest():
+    request_id = request.vars.requestId
+    db(db.JoinGroupRequest.id == request_id).update(status="rejected")
+    rows_control = db(db.JoinGroupRequest.groupCreatorId == auth.user_id).select()
+    d_control = {r.id: {'groupName': r.groupName,
+                        'groupId': r.groupId,
+                        'groupAccessId': r.groupAccessId,
+                        'groupCreatorId': r.groupCreatorId,
+                        'groupCreatorName': r.groupCreatorName,
+                        'applicantId': r.applicantId,
+                        'applicantName': r.applicantName,
+                        'status': r.status
+                        }
+                 for r in rows_control}
+    return response.json(dict(controlList=d_control))
 
 
 
