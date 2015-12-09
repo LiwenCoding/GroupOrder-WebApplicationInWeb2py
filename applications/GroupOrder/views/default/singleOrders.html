@@ -1,0 +1,191 @@
+{{extend 'layout.html'}}
+
+<div id="target"></div>
+
+
+<script id="template" type="text/ractive">
+
+<div>
+    {{if auth.user_id is None:}}
+    <div id="main_login">
+    {{=A('Sign Up', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['register']))}}
+    {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
+    </div>
+    {{pass}}
+    {% #if loading %}
+    <div id="load_spinner">
+    <i class="fa fa-spinner fa-pulse fa-2x"></i>
+    </div>
+    {% /if %}
+</div>
+<br><br>
+
+<div class="container-fluid">
+  <div class="row">
+
+  <div>
+        {% #displayOrderDetail:id %}
+        <li>{% itemName %}</li>
+        <li>{% itemPrice %}</li>
+        <li>{% itemQuantity %}</li>
+        <li>{% creatorFirstName %}
+        {% /displayOrderDetail %}
+  </div>
+
+
+
+<table class="table table-bordered" id="myTable">
+  <thead>
+      <tr>
+        <th class="col-md-1">#</th>
+        <th class="col-md-9">Item</th>
+        <th class="col-md-1">Price</th>
+        <th class="col-md-1">Quantity</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% #displayMenuDetail:id %}
+      <tr>
+        <td class="itemIdData">{% itemId %}</td>
+        <td class="itemNameData">{% itemName %}</td>
+        <td class="itemPriceData">{% itemPrice %}</td>
+        <td><div class="input-group">
+            <input type="number" class="form-control" id="itemQuantityData" placeholder="0"></div>
+        </td>
+      </tr>
+      {% /displayMenuDetail %}
+  <tbody>
+</table>
+<div>Total:&nbsp;$&nbsp;</div>
+
+<button type="button" class="btn btn-primary btn-lg" on-click="submitOrder">Submit</button>
+
+
+
+
+  </div>
+</div>
+
+
+</script>
+
+
+<script>
+
+$(document).ready(function () {
+
+    var ractive = new Ractive({
+        el: '#target',
+        template: '#template',
+        delimiters: ['{%', '%}'],
+        tripleDelimiters: ['{%%', '%%}'],
+        data: {
+            loading: true,
+            menuId: "{{=menuId}}",
+            displayMenuDetail: {},
+            singleOrderCreator: "{{=auth.user_id}}",
+            groupOrderId: "{{=groupOrderId}}",
+            displayOrderDetail: {},
+
+
+
+        }
+    });
+
+
+
+    $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
+        {
+            data: {
+                menuId: ractive.get('menuId'),
+            },
+            method: 'POST',
+            success: function (data) {
+                ractive.set('displayMenuDetail', data['displayMenuDetail']);
+                ractive.set('loading', false);
+            }
+        }
+    );
+
+
+    $.ajax("{{=URL('default', 'getOrderDetail', user_signature=True)}}",
+    {
+        data: {
+            groupOrderId: ractive.get('groupOrderId'),
+        },
+        method: 'POST',
+        success: function (data) {
+            ractive.set('displayOrderDetail', data['displayOrderDetail']);
+            ractive.set('loading', false);
+        }
+    }
+    );
+
+
+
+
+    ractive.on("submitOrder", function() {
+        var nameArray = [];
+        var priceArray = [];
+        var inputArray = [];
+
+        $("input").each(function() {
+            inputArray.push($(this).val());
+        });
+
+        $(".itemNameData").each(function() {
+            nameArray.push($(this).html());
+        });
+
+        $(".itemPriceData").each(function() {
+            priceArray.push($(this).html());
+        });
+
+//        alert(nameArray[1]);
+//        alert(inputArray[1]);
+//        alert(priceArray[1]);
+//          alert((inputArray[0]*priceArray[0]));
+//
+        $.ajax("{{=URL('default', 'addSingleOrders', user_signature=True)}}",
+        {
+            data: {
+                itemName1: nameArray[0],
+                itemPrice1: priceArray[0],
+                itemQuantity1: inputArray[0],
+                itemName2: nameArray[1],
+                itemPrice2: priceArray[1],
+                itemQuantity2: inputArray[1],
+                itemName3: nameArray[2],
+                itemPrice3: priceArray[2],
+                itemQuantity3: inputArray[2],
+                singleOrderCreator: ractive.get('singleOrderCreator'),
+                status: "pending",
+                groupOrderId: ractive.get('groupOrderId'),
+
+            },
+            method: 'POST',
+            success: function (data) {
+                ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                ractive.set('loading', false);
+            },
+            error: function () {
+            }
+        });
+
+    });
+
+
+
+
+
+
+
+
+
+
+});
+</script>
+
+
+
+

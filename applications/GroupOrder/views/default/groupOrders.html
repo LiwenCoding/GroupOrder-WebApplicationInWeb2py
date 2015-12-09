@@ -203,12 +203,15 @@
       <h1 class="page-header">GroupOrders</h1>
       <div class="board_list">
         {% #displayOrder:id %}
-        <div class="message col-sm-2 board title">
-            <li>{% groupOrderDeadline %}</li>
-            <li>{% menuId %}</li>
+                <a class="link" href="{{=URL('default', 'singleOrders')}}/{% menuId %}/{% groupOrderId %}">
+            <div class="message col-sm-2 board title">
+                <li>{% groupOrderId %}</li>
+                <li>{% groupOrderDeadline %}</li>
+                <li>{% menuName %}</li>
+                <li>{% creatorFirstName %}</li>
+            </div>
+            </a>
         {% /displayOrder %}
-        </div>
-
     </div>
   </div>
 </div>
@@ -329,7 +332,7 @@
 
             var menuId = $(e.node).data("id");
 
-            alert(menuId);
+//            alert(menuId);
             getMenuDetail(menuId);
 
 
@@ -356,7 +359,7 @@
         ractive.on("saveOrder", function(e) {
             var deadline = $('#datetime_input').val();
             var menuId = $("#menu_input option:selected").val();
-            alert({{=auth.user_id}});
+//            alert({{=auth.user_id}});
             $.ajax("{{=URL('default', 'addOrder', user_signature=True)}}",
                     {
                         data: {
@@ -365,8 +368,11 @@
                             groupId:ractive.get('groupId')
                         },
                         method: 'POST',
-                        success: function (data) {
+                        success: function(data) {
+
                             $('#bs-example-modal-lg-order').modal('hide');
+                            ractive.set('displayOrder', data['displayOrder']);
+                            ractive.set('loading', false);
                         },
                         error: function() {
                             alert("Error!");

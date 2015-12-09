@@ -40,13 +40,13 @@ db.define_table('GroupOrders',
                 Field('menuName'),
                 Field('groupId', db.Groups))
 
-db.define_table('SingleOrder',
+db.define_table('SingleOrders',
                 Field('singleOrderCreator', db.auth_user),
-                Field('orderId', db.GroupOrders),
-                Field('orderList'),
-                Field('orderQuantity'),
-                Field('orderPrice'),
-                Field('status'))
+                Field('groupOrderId', db.GroupOrders),
+                Field('itemName'),
+                Field('itemPrice'),
+                Field('itemQuantity'),
+                Field('status', requires=IS_IN_SET('pending', 'success', 'failure')))
 
 db.define_table('JoinGroupRequest',
                 Field('applicantId', db.auth_user),

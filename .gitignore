@@ -14,3 +14,4 @@ applications/GroupOrder/sessions/*
 applications/GroupOrder/databases/*
 applications/GroupOrder/errors/*
 applications/admin/sessions/
+parameters_8000.py

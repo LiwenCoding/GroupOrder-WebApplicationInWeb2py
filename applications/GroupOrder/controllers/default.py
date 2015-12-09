@@ -2,8 +2,6 @@
 
 
 def index():
-    # if request.args[0] is not None:
-        # response.flash = T("Hello World")
     return dict()
 
 
@@ -42,7 +40,7 @@ def createGroup():
 
 
 
-
+@auth.requires_login()
 def groupOrders():
     groupId = request.args[0]
     group_entry = db(db.Groups.id == groupId).select()
@@ -55,11 +53,7 @@ def groupOrders():
     return dict(groupId=groupId,)
 
 
-def requestGroupMembership():
-
-    # redirect(URL('default', 'index'))
-    return "ok"
-
+@auth.requires_signature()
 def loadMenuOrderList():
     menu_rows = db(db.Menus.groupId == request.vars.groupId).select()
     menu_d = {r.id: {'menuName': r.menuName,
@@ -68,12 +62,16 @@ def loadMenuOrderList():
 
     order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
     order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
-                      'menuId': r.menuId}
+                      'menuId': r.menuId,
+                      'creatorFirstName': r.creatorLastName,
+                      'menuName': r.menuName,
+                      'groupOrderId': r.id,
+                      }
                for r in order_rows}
     return response.json(dict(displayMenu=menu_d, displayOrder=order_d))
 
 
-
+@auth.requires_signature()
 def addMenuList():
 
     # menuList = json.load(request.vars.menuList)
@@ -106,6 +104,7 @@ def addMenuList():
     return response.json(dict(displayMenu=d))
 
 
+@auth.requires_signature()
 def getMenuDetail():
     rows = db(db.MenuDetails.menuId == request.vars.menuId).select()
     d = {r.id: {'itemName': r.itemName,
@@ -115,11 +114,14 @@ def getMenuDetail():
     return response.json(dict(displayMenuDetail=d))
 
 
-
+@auth.requires_signature()
 def addOrder():
-    creatorFirst = db(db.auth_user.id == auth.user_id).select(db.auth_user.first_name)
-    creatorLast = db(db.auth_user.id == auth.user_id).select(db.auth_user.last_name)
-    menuName = db(db.Menus.id == request.vars.menuId).select(db.Menus.menuName)
+    creatorFirsts = db(db.auth_user.id == auth.user_id).select()
+    creatorLasts = db(db.auth_user.id == auth.user_id).select()
+    menuNames = db(db.Menus.id == request.vars.menuId).select()
+    creatorFirst = creatorFirsts[0].first_name
+    creatorLast = creatorLasts[0].last_name
+    menuName = menuNames[0].menuName
     db.GroupOrders.insert(groupOrderCreator=auth.user_id,
                           creatorFirstName=creatorFirst,
                           creatorLastName=creatorLast,
@@ -128,19 +130,88 @@ def addOrder():
                           menuName=menuName,
                           groupId=request.vars.groupId)
 
-    return "ok"
+    order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
+    order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
+                      'menuId': r.menuId,
+                      'creatorFirstName': r.creatorLastName,
+                      'menuName': r.menuName,
+                      'groupOrderId': r.id,
+                      }
+               for r in order_rows}
+    return response.json(dict(displayOrder=order_d))
 
 
-
+@auth.requires_signature()
 def resetOrder():
     db(db.GroupOrders.id> 0).delete()
     return
 
+
+def singleOrders():
+    menuId = request.args[0]
+    groupOrderId = request.args[1]
+    return dict(menuId=menuId,groupOrderId=groupOrderId)
+
+
+def addSingleOrders():
+
+    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+                           status = request.vars.status,
+                           groupOrderId = request.vars.groupOrderId,
+                           itemName = request.vars.itemName1,
+                           itemPrice = request.vars.itemPrice1,
+                           itemQuantity = request.vars.itemQuantity1)
+
+    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+                       status = request.vars.status,
+                       groupOrderId = request.vars.groupOrderId,
+                       itemName = request.vars.itemName2,
+                       itemPrice = request.vars.itemPrice2,
+                       itemQuantity = request.vars.itemQuantity2)
+
+    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+                       status = request.vars.status,
+                       groupOrderId = request.vars.groupOrderId,
+                       itemName = request.vars.itemName3,
+                       itemPrice = request.vars.itemPrice3,
+                       itemQuantity = request.vars.itemQuantity3)
+
+    order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
+    d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
+                'itemName': r.itemName,
+                'itemPrice': r.itemPrice,
+                'itemQuantity': r.itemQuantity,
+                'status': r.status,
+                'groupOrderId': r.id,
+                }
+               for r in order_rows}
+    return response.json(dict(displayOrderDetail=d))
+
+
+
+def getOrderDetail():
+
+    order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
+    d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
+                'itemName': r.itemName,
+                'itemPrice': r.itemPrice,
+                'itemQuantity': r.itemQuantity,
+                'status': r.status,
+                'groupOrderId': r.id,
+                }
+               for r in order_rows}
+    return response.json(dict(displayOrderDetail=d))
+
+
+
+
+@auth.requires_signature()
 def resetRequest():
     db(db.JoinGroupRequest.id > 0).delete()
     return
 
 
+@auth.requires_login()
 def sendRequest():
     groupId = request.vars.groupId
     logger.info("request for " + groupId)
@@ -176,11 +247,14 @@ def sendRequest():
     return response.json(dict(insert=True))
 
 
+@auth.requires_login()
 def manage():
     logger.info("in manage page")
     # auth.user_id
     return dict()
 
+
+@auth.requires_signature()
 def loadRequest():
     rows_control = db(db.JoinGroupRequest.groupCreatorId == auth.user_id).select()
     d_control = {r.id: {'groupName': r.groupName,
@@ -209,6 +283,7 @@ def loadRequest():
     return response.json(dict(controlList=d_control, requestList=d_request))
 
 
+@auth.requires_signature()
 def approveRequest():
     request_id = request.vars.requestId
     request_entry = db(db.JoinGroupRequest.id == request_id).select().first()
@@ -231,6 +306,7 @@ def approveRequest():
     return response.json(dict(controlList=d_control))
 
 
+@auth.requires_signature()
 def rejectRequest():
     request_id = request.vars.requestId
     db(db.JoinGroupRequest.id == request_id).update(status="rejected")
@@ -246,6 +322,7 @@ def rejectRequest():
                         }
                  for r in rows_control}
     return response.json(dict(controlList=d_control))
+
 
 
 def user():
