@@ -42,10 +42,10 @@ db.define_table('GroupOrders',
 db.define_table('SingleOrders',
                 Field('singleOrderCreator', db.auth_user),
                 Field('orderId', db.GroupOrders),
-                Field('orderList'),
-                Field('orderQuantity'),
+                Field('itemId'),
+                Field('itemQuantity'),
                 Field('orderPrice'),
-                Field('status'))
+                Field('status', requires=IS_IN_SET('pending', 'success', 'failure')))
 
 
 

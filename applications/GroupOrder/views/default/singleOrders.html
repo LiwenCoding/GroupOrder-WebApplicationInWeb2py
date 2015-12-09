@@ -23,7 +23,7 @@
 <div class="container-fluid">
   <div class="row">
 
-<table class="table table-bordered">
+<table class="table table-bordered" id="myTable">
   <thead>
       <tr>
         <th class="col-md-1">#</th>
@@ -35,17 +35,19 @@
   <tbody>
       {% #displayMenuDetail:id %}
       <tr>
-        <td>1</td>
+        <td class="itemIdData">{% itemId %}</td>
         <td>{% itemName %}</td>
-        <td>{% itemPrice %}</td>
+        <td class="itemPriceData">{% itemPrice %}</td>
         <td><div class="input-group">
-            <input type="number" class="form-control" id="exampleInputAmount" placeholder="Quantity"></div>
+            <input type="number" class="form-control" id="itemQuantityData" placeholder="0"></div>
         </td>
       </tr>
       {% /displayMenuDetail %}
   <tbody>
 </table>
+<div>Total:&nbsp;$&nbsp;</div>
 
+<button type="button" class="btn btn-primary btn-lg" on-click="submitOrder">Submit</button>
 
 
 
@@ -59,40 +61,72 @@
 
 <script>
 
+$(document).ready(function () {
 
-    $(document).ready(function () {
-
-        var ractive = new Ractive({
-            el: '#target',
-            template: '#template',
-            delimiters: ['{%', '%}'],
-            tripleDelimiters: ['{%%', '%%}'],
-            data: {
-                loading: true,
-                menuId: "{{=menuId}}",
-                displayMenuDetail: {},
-
-
-            }
-        });
+    var ractive = new Ractive({
+        el: '#target',
+        template: '#template',
+        delimiters: ['{%', '%}'],
+        tripleDelimiters: ['{%%', '%%}'],
+        data: {
+            loading: true,
+            menuId: "{{=menuId}}",
+            displayMenuDetail: {},
 
 
 
-        $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
-            {
-                data: {
-                    menuId: ractive.get('menuId'),
-                },
-                method: 'POST',
-                success: function (data) {
-                    ractive.set('displayMenuDetail', data['displayMenuDetail']);
-                    ractive.set('loading', false);
-                }
-            }
-        );
+        }
     });
 
 
+
+    $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
+        {
+            data: {
+                menuId: ractive.get('menuId'),
+            },
+            method: 'POST',
+            success: function (data) {
+                ractive.set('displayMenuDetail', data['displayMenuDetail']);
+                ractive.set('loading', false);
+            }
+        }
+    );
+
+    ractive.on("submitOrder", function() {
+        var idArray = [];
+        var priceArray = [];
+        var inputArray = [];
+
+        $("input").each(function() {
+            inputArray.push($(this).val());
+        });
+
+        $(".itemIdData").each(function() {
+            idArray.push($(this).html());
+        });
+
+        $(".itemPriceData").each(function() {
+            priceArray.push($(this).html());
+        });
+
+        alert(idArray[2]);
+        alert(inputArray[2]);
+        alert(priceArray[0]);
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+});
 </script>
 
 
