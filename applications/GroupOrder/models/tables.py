@@ -49,6 +49,8 @@ db.define_table('SingleOrder',
                 Field('status'))
 
 db.define_table('JoinGroupRequest',
-                Field('applicantId', db.auth_user.id),
-                Field('groupId'))
-
+                Field('applicantId', db.auth_user),
+                Field('groupId', db.Groups),
+                Field('groupAccessId'),
+                Field('groupCreatorId'),
+                Field('status',requires=IS_IN_SET('pending', 'done')))

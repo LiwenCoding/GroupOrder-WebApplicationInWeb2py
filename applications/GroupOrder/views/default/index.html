@@ -56,7 +56,12 @@
       {% /groupList %}
     </select>
    </div>
-    <button type="button" class="btn btn-primary" on-click="sendJoinRequest">Send</button>
+   <button type="button" class="btn btn-primary" on-click="sendJoinRequest">Send</button>
+
+   <button type="button" class="btn btn-default" aria-label="Left Align">
+     <span class="glyphicon glyphicon-cog" aria-hidden="true" href="{{=URL('default', 'manage')}}"></span>
+   </button>
+
   </div>
 </div>
 <br><br>
@@ -139,15 +144,20 @@ $(function() {
     });
 
     ractive.on("sendJoinRequest", function() {
-        var groupId = $('#group_select option:selected').val()
+        var groupId = $('#group_select option:selected').val();
         $.ajax("{{=URL('default', 'sendRequest', user_signature=True)}}",
                 {
                     data: {
                         groupId: groupId
                     },
                     method: 'POST',
-                    sucess: function(data) {
-
+                    success: function(data) {
+                        if (data['insert']) {
+                            alert("Request successfully sent!");
+                        }
+                        else {
+                            alert("Request already exists or not necessary!")
+                        }
                     },
                     error: function() {}
                 }

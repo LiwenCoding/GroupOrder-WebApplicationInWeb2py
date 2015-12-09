@@ -45,8 +45,8 @@ def createGroup():
 
 def groupOrders():
     groupId = request.args[0]
-    group_access_ids = db(db.Groups.id == groupId).select()
-    group_access_id= group_access_ids[0].groupAccessId
+    group_entry = db(db.Groups.id == groupId).select()
+    group_access_id= group_entry[0].groupAccessId
     logger.info(group_access_id)
     if not (auth.has_membership(group_access_id, auth.user_id, 'general') or auth.has_membership(group_access_id, auth.user_id, 'admin')):
         # redirect(URL('default', 'requestGroupMembership', args=[groupId, group_access_id]))
@@ -136,8 +136,35 @@ def resetOrder():
     db(db.GroupOrders.id> 0).delete()
     return
 
+def resetRequest():
+    db(db.JoinGroupRequest.id > 0).delete()
+    return
 
 
+def sendRequest():
+    groupId = request.vars.groupId
+    requestTableEntry = db(db.JoinGroupRequest.applicantId == auth.user_id, db.JoinGroupRequest.groupId == groupId).select().first()
+    logger.info(requestTableEntry)
+    if requestTableEntry is not None:
+        logger.info("request already made!")
+        return response.json(dict(insert=False))
+    group_entry = db(db.Groups.id == groupId).select()
+    group_access_id = group_entry[0].groupAccessId
+    group_creator_id = group_entry[0].groupCreator
+    if group_creator_id == auth.user_id:
+        logger.info("requester is creator!")
+        return response.json(dict(insert=False))
+    db.JoinGroupRequest.insert(applicantId=auth.user_id,
+                               groupId=groupId,
+                               groupAccessId=group_access_id,
+                               groupCreatorId=group_creator_id,
+                               status='pending')
+    return response.json(dict(insert=True))
+
+
+def manage():
+    # auth.user_id
+    return "ok"
 
 def user():
     """
