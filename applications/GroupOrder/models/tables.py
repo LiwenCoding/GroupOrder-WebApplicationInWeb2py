@@ -18,7 +18,8 @@ from datetime import datetime,timedelta
 
 db.define_table('Groups',
                 Field('groupName'),
-                Field('groupCreator', db.auth_user))
+                Field('groupCreator', db.auth_user),
+                Field('groupAccessId'))
 
 db.define_table('Menus',
                 Field('menuName'),
@@ -32,15 +33,27 @@ db.define_table('MenuDetails',
 
 db.define_table('GroupOrders',
                 Field('groupOrderCreator', db.auth_user),
+                Field('creatorFirstName'),
+                Field('creatorLastName'),
                 Field('groupOrderDeadline'),
-                Field('menuId', db.Menus))
+                Field('menuId', db.Menus),
+                Field('menuName'),
+                Field('groupId', db.Groups))
 
 db.define_table('SingleOrder',
                 Field('singleOrderCreator', db.auth_user),
                 Field('orderId', db.GroupOrders),
                 Field('orderList'),
                 Field('orderQuantity'),
-                Field('orderPrice'))
+                Field('orderPrice'),
+                Field('status'))
 
-
-
+db.define_table('JoinGroupRequest',
+                Field('applicantId', db.auth_user),
+                Field('applicantName'),
+                Field('groupId', db.Groups),
+                Field('groupName'),
+                Field('groupAccessId'),
+                Field('groupCreatorId'),
+                Field('groupCreatorName'),
+                Field('status',requires=IS_IN_SET('pending', 'approved', 'rejected')))

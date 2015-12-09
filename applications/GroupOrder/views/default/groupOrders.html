@@ -12,9 +12,14 @@
     {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
     </div>
     {{else:}}
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg">
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg-menu">
      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Menu
     </button>
+
+    <button type="button" class="btn btn-primary btn-lg" data-target=".bs-example-modal-lg-order" onclick="javascript:showModal();">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create an order
+    </button>
+
     {{pass}}
     {% #if loading %}
     <div id="load_spinner">
@@ -25,7 +30,7 @@
 <br><br>
 
 <!-- Modal -->
-<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade bs-example-modal-lg-menu" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -128,6 +133,47 @@
   </div>
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg-order" id="bs-example-modal-lg-order" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create an Order</h4>
+      </div>
+      <div class="modal-body">
+
+        <br><br>
+        <select class="form-control" id="menu_input">
+          {% #displayMenu:id %}
+          <option value="{%id%}">{% menuName %}</option>
+          {% /displayMenu %}
+        </select>
+
+        <br><br>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker2'>
+                <input type='text' id="datetime_input" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" on-click="saveOrder">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
@@ -148,26 +194,24 @@
     </div>
 
 
-<div>menuCreator: {% menuCreator %}</div>
-<div>groupId: {% groupId %}</div>
+
+    <div>menuCreator: {% menuCreator %}</div>
+    <div>groupId: {% groupId %}</div>
 
 
-      <div class="col-sm-9">
+    <div class="col-sm-9">
       <h1 class="page-header">GroupOrders</h1>
-
-
-      <!--
       <div class="board_list">
-        {% #displayMenu:id %}
-        <div on-click="showMenuDetail" data-id="{% menuId %}" class="message col-md-3 board title"><p id="paragraph{% menuId %}">{% menuName %}</p>
+        {% #displayOrder:id %}
+        <div class="message col-sm-2 board title">
+            <li>{% groupOrderDeadline %}</li>
+            <li>{% menuId %}</li>
+        {% /displayOrder %}
         </div>
-        {% /displayMenu %}
-      </div>
-      -->
-
 
     </div>
-
+  </div>
+</div>
 
 
 
@@ -194,52 +238,50 @@
 
 
 
-
-
-
-
 </script>
 
 
-
-
-
 <script>
-$(function() {
-    var ractive = new Ractive({
-        el: '#target',
-        template: '#template',
-        delimiters: ['{%', '%}'],
-        tripleDelimiters: ['{%%', '%%}'],
-        data: {
-            loading: true,
-            displayMenu: {},
-            groupId: "{{=groupId}}",
-            menuCreator: "{{=auth.user_id}}",
-            displayMenuDetail: {},
 
-        }
-    });
+    function showModal() {
+        $('#bs-example-modal-lg-order').modal("toggle");
+        $('#datetimepicker2').datetimepicker();
 
-    $.ajax("{{=URL('default', 'loadMenuList', user_signature=True)}}",
-        {
+    }
+
+    $(document).ready(function () {
+
+        var ractive = new Ractive({
+            el: '#target',
+            template: '#template',
+            delimiters: ['{%', '%}'],
+            tripleDelimiters: ['{%%', '%%}'],
             data: {
-                groupId: ractive.get('groupId'),
-            },
-            method: 'POST',
-            success: function (data) {
-              ractive.set('displayMenu', data['displayMenu']);
-              ractive.set('loading', false);
+                loading: true,
+                displayMenu: {},
+                groupId: "{{=groupId}}",
+                menuCreator: "{{=auth.user_id}}",
+                displayMenuDetail: {},
+                displayOrder: {}
             }
-        }
-    );
+        });
+
+        $.ajax("{{=URL('default', 'loadMenuOrderList', user_signature=True)}}",
+                {
+                    data: {
+                        groupId: ractive.get('groupId'),
+                    },
+                    method: 'POST',
+                    success: function (data) {
+                        ractive.set('displayMenu', data['displayMenu']);
+                        ractive.set('loading', false);
+                        ractive.set('displayOrder', data['displayOrder']);
+                    }
+                }
+        );
 
 
-
-
-
-
-    ractive.on("saveMenu", function() {
+        ractive.on("saveMenu", function () {
 //        var t = $("input").eq(5).val();
 //do validation price should be number,  input1 and input2 have to be filled both.
 //        var menuList = [];
@@ -257,67 +299,84 @@ $(function() {
 //        alert($("#price1").val());
 //        alert($("#item2").val());
 //        alert($("#price2").val());
-        $.ajax("{{=URL('default', 'addMenuList', user_signature=True)}}",
-        {
-          data: {
+            $.ajax("{{=URL('default', 'addMenuList', user_signature=True)}}",
+                    {
+                        data: {
 //                menuList: JSON.stringify(menuList),
-                menuName: $("#menuName").val(),
-                item1: $("#item1").val(),
-                price1: $("#price1").val(),
-                item2: $("#item2").val(),
-                price2: $("#price2").val(),
-                item3: $("#item3").val(),
-                price3: $("#price3").val(),
-                groupId: ractive.get('groupId'),
-                menuCreator: ractive.get('menuCreator'),
-          },
-          method: 'POST',
-          success: function(data) {
-              ractive.set('displayMenu', data['displayMenu']);
-              ractive.set('loading', false);
-              $('#menuForm')[0].reset();
-              $("#myModal").modal('hide');
-          },
-          error: function() {}
+                            menuName: $("#menuName").val(),
+                            item1: $("#item1").val(),
+                            price1: $("#price1").val(),
+                            item2: $("#item2").val(),
+                            price2: $("#price2").val(),
+                            item3: $("#item3").val(),
+                            price3: $("#price3").val(),
+                            groupId: ractive.get('groupId'),
+                            menuCreator: ractive.get('menuCreator'),
+                        },
+                        method: 'POST',
+                        success: function (data) {
+                            ractive.set('displayMenu', data['displayMenu']);
+                            ractive.set('loading', false);
+                            $('#menuForm')[0].reset();
+                            $("#myModal").modal('hide');
+                        },
+                        error: function () {
+                        }
+                    });
         });
-    });
 
-    ractive.on("showMenuDetail", function(e) {
+        ractive.on("showMenuDetail", function (e) {
 
-        var menuId = $(e.node).data("id");
+            var menuId = $(e.node).data("id");
 
-//        alert(menuId);
-        getMenuDetail(menuId);
+            alert(menuId);
+            getMenuDetail(menuId);
 
 
-    });
+        });
 
-    function getMenuDetail(menuId) {
+        function getMenuDetail(menuId) {
 
-    $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
-        {
-            data: {
-                menuId: menuId,
-            },
-            method: 'POST',
-            success: function (data) {
-              ractive.set('displayMenuDetail', data['displayMenuDetail']);
-              ractive.set('loading', false);
-            }
+            $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
+                    {
+                        data: {
+                            menuId: menuId
+                        },
+                        method: 'POST',
+                        success: function (data) {
+                            ractive.set('displayMenuDetail', data['displayMenuDetail']);
+                            ractive.set('loading', false);
+                        }
+                    }
+            );
+
+
         }
-    );
 
+        ractive.on("saveOrder", function(e) {
+            var deadline = $('#datetime_input').val();
+            var menuId = $("#menu_input option:selected").val();
+            alert({{=auth.user_id}});
+            $.ajax("{{=URL('default', 'addOrder', user_signature=True)}}",
+                    {
+                        data: {
+                            deadline: deadline,
+                            menuId: menuId,
+                            groupId:ractive.get('groupId')
+                        },
+                        method: 'POST',
+                        success: function (data) {
+                            $('#bs-example-modal-lg-order').modal('hide');
+                        },
+                        error: function() {
+                            alert("Error!");
+                        }
+                    }
 
-    }
+            );
+        });
 
-
-
-
-
-
-
-
-});
+    });
 </script>
 
 
