@@ -58,9 +58,11 @@
    </div>
    <button type="button" class="btn btn-primary" on-click="sendJoinRequest">Send</button>
 
-   <button type="button" class="btn btn-default" aria-label="Left Align">
-     <span class="glyphicon glyphicon-cog" aria-hidden="true" href="{{=URL('default', 'manage')}}"></span>
-   </button>
+   <a class="link" href="{{=URL('default', 'manage')}}">
+     <button type="button" class="btn btn-default" aria-label="Left Align">
+       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+     </button>
+   </a>
 
   </div>
 </div>

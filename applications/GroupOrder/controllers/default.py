@@ -163,8 +163,12 @@ def sendRequest():
 
 
 def manage():
+    logger.info("in manage page")
+
     # auth.user_id
     return "ok"
+
+
 
 def user():
     """

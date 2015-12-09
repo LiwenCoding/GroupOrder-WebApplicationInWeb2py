@@ -53,4 +53,4 @@ db.define_table('JoinGroupRequest',
                 Field('groupId', db.Groups),
                 Field('groupAccessId'),
                 Field('groupCreatorId'),
-                Field('status',requires=IS_IN_SET('pending', 'done')))
+                Field('status',requires=IS_IN_SET('pending', 'approve', 'disapprove')))
