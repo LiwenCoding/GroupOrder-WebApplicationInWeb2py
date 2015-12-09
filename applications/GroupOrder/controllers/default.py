@@ -15,7 +15,6 @@ def reset():
   return
 
 
-
 def loadGroup():
     rows = db(db.Groups.id > 0).select()
     d = {r.id: {'groupName': r.groupName,
@@ -42,7 +41,7 @@ def createGroup():
 
 
 
-
+@auth.requires_login()
 def groupOrders():
     groupId = request.args[0]
     group_entry = db(db.Groups.id == groupId).select()
@@ -55,11 +54,7 @@ def groupOrders():
     return dict(groupId=groupId,)
 
 
-def requestGroupMembership():
-
-    # redirect(URL('default', 'index'))
-    return "ok"
-
+@auth.requires_signature()
 def loadMenuOrderList():
     menu_rows = db(db.Menus.groupId == request.vars.groupId).select()
     menu_d = {r.id: {'menuName': r.menuName,
@@ -73,7 +68,7 @@ def loadMenuOrderList():
     return response.json(dict(displayMenu=menu_d, displayOrder=order_d))
 
 
-
+@auth.requires_signature()
 def addMenuList():
 
     # menuList = json.load(request.vars.menuList)
@@ -106,6 +101,7 @@ def addMenuList():
     return response.json(dict(displayMenu=d))
 
 
+@auth.requires_signature()
 def getMenuDetail():
     rows = db(db.MenuDetails.menuId == request.vars.menuId).select()
     d = {r.id: {'itemName': r.itemName,
@@ -115,7 +111,7 @@ def getMenuDetail():
     return response.json(dict(displayMenuDetail=d))
 
 
-
+@auth.requires_signature()
 def addOrder():
     creatorFirst = db(db.auth_user.id == auth.user_id).select(db.auth_user.first_name)
     creatorLast = db(db.auth_user.id == auth.user_id).select(db.auth_user.last_name)
@@ -131,16 +127,19 @@ def addOrder():
     return "ok"
 
 
-
+@auth.requires_signature()
 def resetOrder():
     db(db.GroupOrders.id> 0).delete()
     return
 
+
+@auth.requires_signature()
 def resetRequest():
     db(db.JoinGroupRequest.id > 0).delete()
     return
 
 
+@auth.requires_login()
 def sendRequest():
     groupId = request.vars.groupId
     logger.info("request for " + groupId)
@@ -176,11 +175,14 @@ def sendRequest():
     return response.json(dict(insert=True))
 
 
+@auth.requires_login()
 def manage():
     logger.info("in manage page")
     # auth.user_id
     return dict()
 
+
+@auth.requires_signature()
 def loadRequest():
     rows_control = db(db.JoinGroupRequest.groupCreatorId == auth.user_id).select()
     d_control = {r.id: {'groupName': r.groupName,
@@ -209,6 +211,7 @@ def loadRequest():
     return response.json(dict(controlList=d_control, requestList=d_request))
 
 
+@auth.requires_signature()
 def approveRequest():
     request_id = request.vars.requestId
     request_entry = db(db.JoinGroupRequest.id == request_id).select().first()
@@ -231,6 +234,7 @@ def approveRequest():
     return response.json(dict(controlList=d_control))
 
 
+@auth.requires_signature()
 def rejectRequest():
     request_id = request.vars.requestId
     db(db.JoinGroupRequest.id == request_id).update(status="rejected")
@@ -246,6 +250,7 @@ def rejectRequest():
                         }
                  for r in rows_control}
     return response.json(dict(controlList=d_control))
+
 
 
 def user():
