@@ -270,7 +270,6 @@ $(document).ready(function () {
 
     ractive.on("confirmSingleOrder", function (e) {
         singleOrderId = $(e.node).val();
-        alert(singleOrderId);
         $.ajax("{{=URL('default', 'confirmSingleOrder', user_signature=True)}}",
                 {
                     data: {
@@ -290,7 +289,6 @@ $(document).ready(function () {
 
     ractive.on("cancelSingleOrder", function(e) {
         singleOrderId = $(e.node).val();
-        alert(singleOrderId);
         $.ajax("{{=URL('default', 'cancelSingleOrder', user_signature=True)}}",
                 {
                     data: {

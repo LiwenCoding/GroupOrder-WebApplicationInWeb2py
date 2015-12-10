@@ -60,7 +60,7 @@ def loadMenuOrderList():
                 'menuId': r.id}
          for r in menu_rows}
 
-    order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select(db.GroupOrders.ALL, orderby=~db.GroupOrders.groupOrderDeadline)
+    order_rows = db(db.GroupOrders.groupId == request.vars.groupId).select()
     order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
                       'menuId': r.menuId,
                       'creatorFirstName': r.creatorFirstName,
