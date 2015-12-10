@@ -60,7 +60,7 @@ def loadMenuOrderList():
                 'menuId': r.id}
          for r in menu_rows}
 
-    order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
+    order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select(db.GroupOrders.ALL, orderby=~db.GroupOrders.groupOrderDeadline)
     order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
                       'menuId': r.menuId,
                       'creatorFirstName': r.creatorFirstName,
@@ -155,8 +155,9 @@ def singleOrders():
     menuId = request.args[0]
     groupOrderId = request.args[1]
     deadline = db(db.GroupOrders.id == groupOrderId).select().first().groupOrderDeadline
+    groupOrderCreator=db(db.GroupOrders.id == groupOrderId).select().first().groupOrderCreator
     logger.info(deadline)
-    return dict(menuId=menuId, groupOrderId=groupOrderId, deadline=deadline)
+    return dict(menuId=menuId, groupOrderId=groupOrderId, deadline=deadline, groupOrderCreator=groupOrderCreator)
 
 
 def addSingleOrders():
@@ -210,7 +211,39 @@ def getOrderDetail():
 @auth.requires_signature()
 def deleteSingleOrder():
     db(db.SingleOrders.id == request.vars.singleOrderId).delete()
-    order_rows = db(db.SingleOrders.groupOrderId == request.vars.groupOrderId).select()
+    d = getSingleOrderDict(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d))
+    # order_rows = db(db.SingleOrders.groupOrderId == request.vars.groupOrderId).select()
+    # d = {r.id: {'creatorId': r.singleOrderCreator,
+    #             'creatorFirstName': r.singleOrderCreator.first_name,
+    #             'itemName': r.itemName,
+    #             'itemPrice': r.itemPrice,
+    #             'itemQuantity': r.itemQuantity,
+    #             'status': r.status,
+    #             'groupOrderId': r.id,
+    #             }
+    #            for r in order_rows}
+    # return response.json(dict(displayOrderDetail=d))
+
+
+def confirmSingleOrder():
+    logger.info(request.vars.singleOrderId + "requesting for success")
+    db(db.SingleOrders.id == request.vars.singleOrderId).update(status="success")
+    d = getSingleOrderDict(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d))
+
+
+def cancelSingleOrder():
+    logger.info(request.vars.singleOrderId + "requesting for success")
+    db(db.SingleOrders.id == request.vars.singleOrderId).update(status="failure")
+    d = getSingleOrderDict(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d))
+
+
+
+def getSingleOrderDict(groupId):
+    order_rows = db(db.SingleOrders.groupOrderId == groupId).select()
+    # db.SingleOrders.ALL, orderby=db.SingleOrders.creatorId
     d = {r.id: {'creatorId': r.singleOrderCreator,
                 'creatorFirstName': r.singleOrderCreator.first_name,
                 'itemName': r.itemName,
@@ -220,7 +253,7 @@ def deleteSingleOrder():
                 'groupOrderId': r.id,
                 }
                for r in order_rows}
-    return response.json(dict(displayOrderDetail=d))
+    return d
 
 
 @auth.requires_signature()

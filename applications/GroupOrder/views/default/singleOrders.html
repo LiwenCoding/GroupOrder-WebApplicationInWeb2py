@@ -22,6 +22,8 @@
 
 <div class="container-fluid">
   <div class="row">
+
+  {% #if Date.now() < Date.parse(deadline) %}
   <table class="table table-hover">
     <thead>
       <tr>
@@ -50,6 +52,45 @@
     {% /displayOrderDetail %}
     </tbody>
   </table>
+
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Member</th>
+        <th>item Name</th>
+        <th>item Price</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% #displayOrderDetail:id %}
+      <tr>
+        <td>{% creatorFirstName %}</td>
+        <td>{% itemName %}</td>
+        <td>{% itemPrice %}</td>
+        <td>{% itemQuantity %}</td>
+        <td>{% status %}</td>
+        <td>
+            {% #if status == 'pending' && singleOrderCreator == groupOrderCreator %}
+            <button type="button" class="btn btn-success" value={%id%} on-click="confirmSingleOrder">Confirm</button>
+            <button type="button" class="btn btn-danger" value={%id%} on-click="cancelSingleOrder">Cancel</button>
+            {% else %}
+            <button type="button" class="btn btn-success" value={%id%} disabled="disabled">Confirm</button>
+            <button type="button" class="btn btn-danger" value={%id%} disabled="disabled">Cancel</button>
+            {% /if %}
+        </td>
+      </tr>
+    {% /displayOrderDetail %}
+    </tbody>
+  </table>
+
+
+  {% /if %}
+
+
 
   <!--
   <div>
@@ -116,7 +157,8 @@ $(document).ready(function () {
             singleOrderCreator: "{{=auth.user_id}}",
             groupOrderId: "{{=groupOrderId}}",
             displayOrderDetail: {},
-            deadline: "{{=deadline}}"
+            deadline: "{{=deadline}}",
+            groupOrderCreator: "{{=groupOrderCreator}}"
         }
     });
 
@@ -226,7 +268,45 @@ $(document).ready(function () {
     });
 
 
+    ractive.on("confirmSingleOrder", function (e) {
+        singleOrderId = $(e.node).val();
+        alert(singleOrderId);
+        $.ajax("{{=URL('default', 'confirmSingleOrder', user_signature=True)}}",
+                {
+                    data: {
+                        singleOrderId: singleOrderId,
+                        groupOrderId: ractive.get('groupOrderId')
+                    },
+                    method: 'POST',
+                    success: function (data) {
+                        ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                    },
+                    error: function() {
+                    }
+                }
 
+        );
+    });
+
+    ractive.on("cancelSingleOrder", function(e) {
+        singleOrderId = $(e.node).val();
+        alert(singleOrderId);
+        $.ajax("{{=URL('default', 'cancelSingleOrder', user_signature=True)}}",
+                {
+                    data: {
+                        singleOrderId: singleOrderId,
+                        groupOrderId: ractive.get('groupOrderId')
+                    },
+                    method: 'POST',
+                    success: function (data) {
+                        ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                    },
+                    error: function() {
+                    }
+                }
+
+        );
+    });
 
 
 
