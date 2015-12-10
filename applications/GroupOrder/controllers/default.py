@@ -154,27 +154,36 @@ def singleOrders():
 
 
 def addSingleOrders():
+    if len(request.vars.nameArray) > 0:
+        for i, val in enumerate(request.vars.nameArray):
+            logger.info(val)
+            db.SingleOrders.insert(singleOrderCreator=request.vars.singleOrderCreator,
+                                   status=request.vars.status,
+                                   groupOrderId=request.vars.groupOrderId,
+                                   itemName=request.vars.itemName[i],
+                                   itemPrice=request.vars.itemPrice[i],
+                                   itemQuantity=request.vars.itemQuantity[i])
 
-    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
-                           status = request.vars.status,
-                           groupOrderId = request.vars.groupOrderId,
-                           itemName = request.vars.itemName1,
-                           itemPrice = request.vars.itemPrice1,
-                           itemQuantity = request.vars.itemQuantity1)
-
-    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
-                       status = request.vars.status,
-                       groupOrderId = request.vars.groupOrderId,
-                       itemName = request.vars.itemName2,
-                       itemPrice = request.vars.itemPrice2,
-                       itemQuantity = request.vars.itemQuantity2)
-
-    db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
-                       status = request.vars.status,
-                       groupOrderId = request.vars.groupOrderId,
-                       itemName = request.vars.itemName3,
-                       itemPrice = request.vars.itemPrice3,
-                       itemQuantity = request.vars.itemQuantity3)
+    # db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+    #                        status = request.vars.status,
+    #                        groupOrderId = request.vars.groupOrderId,
+    #                        itemName = request.vars.itemName1,
+    #                        itemPrice = request.vars.itemPrice1,
+    #                        itemQuantity = request.vars.itemQuantity1)
+    #
+    # db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+    #                    status = request.vars.status,
+    #                    groupOrderId = request.vars.groupOrderId,
+    #                    itemName = request.vars.itemName2,
+    #                    itemPrice = request.vars.itemPrice2,
+    #                    itemQuantity = request.vars.itemQuantity2)
+    #
+    # db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
+    #                    status = request.vars.status,
+    #                    groupOrderId = request.vars.groupOrderId,
+    #                    itemName = request.vars.itemName3,
+    #                    itemPrice = request.vars.itemPrice3,
+    #                    itemQuantity = request.vars.itemQuantity3)
 
     order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
     d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
