@@ -10,6 +10,9 @@ def reset():
   db(db.Menus.id> 0).delete()
   db(db.MenuDetails.id>0).delete()
   db(db.Groups.id>0).delete()
+  db(db.JoinGroupRequest.id > 0).delete()
+  db(db.GroupOrders.id> 0).delete()
+  db(db.SingleOrders.id > 0).delete()
   return
 
 
@@ -158,6 +161,8 @@ def addOrder():
 
 def resetOrder():
     db(db.GroupOrders.id> 0).delete()
+    db(db.SingleOrders.id > 0).delete()
+
     return
 
 def resetSingleOrder():
@@ -298,6 +303,8 @@ def getSingleOrderDict(groupId):
 @auth.requires_signature()
 def resetRequest():
     db(db.JoinGroupRequest.id > 0).delete()
+    db(db.GroupOrders.id> 0).delete()
+    db(db.SingleOrders.id > 0).delete()
     return
 
 
