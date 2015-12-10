@@ -22,7 +22,28 @@
 
 <div class="container-fluid">
   <div class="row">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Member</th>
+        <th>item Name</th>
+        <th>item Price</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% #displayOrderDetail:id %}
+      <tr>
+        <td>{% creatorFirstName %}</td>
+        <td>{% itemName %}</td>
+        <td>{% itemPrice %}</td>
+        <td>{% itemQuantity %}</td>
+      </tr>
+    {% /displayOrderDetail %}
+    </tbody>
+  </table>
 
+  <!--
   <div>
         {% #displayOrderDetail:id %}
         <li>{% itemName %}</li>
@@ -31,8 +52,9 @@
         <li>{% creatorFirstName %}
         {% /displayOrderDetail %}
   </div>
+  -->
 
-
+<br><hr><br>
 
 <table class="table table-bordered" id="myTable">
   <thead>
@@ -140,6 +162,18 @@ $(document).ready(function () {
         $(".itemPriceData").each(function() {
             priceArray.push($(this).html());
         });
+
+        for (var i = 0; i < inputArray.length; i++) {
+            if (inputArray[i] == 0) {
+                delete inputArray[i];
+                delete nameArray[i];
+                delete priceArray[i];
+            }
+        }
+
+        inputArray = inputArray.filter(function(n){ return n != undefined });
+        nameArray = nameArray.filter(function(n){ return n != undefined });
+        priceArray = priceArray.filter(function(n){ return n != undefined });
 
 //        alert(nameArray[1]);
 //        alert(inputArray[1]);
