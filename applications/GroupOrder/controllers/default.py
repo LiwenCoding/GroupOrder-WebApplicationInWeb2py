@@ -141,10 +141,12 @@ def addOrder():
     return response.json(dict(displayOrder=order_d))
 
 
-@auth.requires_signature()
 def resetOrder():
     db(db.GroupOrders.id> 0).delete()
     return
+
+def resetSingleOrder():
+    db(db.SingleOrders.id > 0).delete()
 
 
 def singleOrders():
@@ -154,15 +156,23 @@ def singleOrders():
 
 
 def addSingleOrders():
-    if len(request.vars.nameArray) > 0:
-        for i, val in enumerate(request.vars.nameArray):
+    logger.info(request.vars.itemName)
+    logger.info(request.vars.itemQuantity)
+    logger.info(request.vars.itemPrice)
+    logger.info(request.vars.groupOrderId)
+    itemArr = request.vars.itemName.split(';')
+    priceArr = request.vars.itemPrice.split(';')
+    quantity_arr = request.vars.itemQuantity.split(';')
+
+    if request.vars.itemName is not None:
+        for i, val in enumerate(itemArr):
             logger.info(val)
             db.SingleOrders.insert(singleOrderCreator=request.vars.singleOrderCreator,
                                    status=request.vars.status,
                                    groupOrderId=request.vars.groupOrderId,
-                                   itemName=request.vars.itemName[i],
-                                   itemPrice=request.vars.itemPrice[i],
-                                   itemQuantity=request.vars.itemQuantity[i])
+                                   itemName=itemArr[i],
+                                   itemPrice=priceArr[i],
+                                   itemQuantity=quantity_arr[i])
 
     # db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
     #                        status = request.vars.status,
