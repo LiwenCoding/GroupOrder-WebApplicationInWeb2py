@@ -172,15 +172,15 @@ def singleOrders():
 
 
 def addSingleOrders():
-    logger.info(request.vars.itemName)
-    logger.info(request.vars.itemQuantity)
-    logger.info(request.vars.itemPrice)
-    logger.info(request.vars.groupOrderId)
+    # logger.info(request.vars.itemName)
+    # logger.info(request.vars.itemQuantity)
+    # logger.info(request.vars.itemPrice)
+    # logger.info(request.vars.groupOrderId)
     itemArr = request.vars.itemName.split(';')
     priceArr = request.vars.itemPrice.split(';')
     quantity_arr = request.vars.itemQuantity.split(';')
 
-    if request.vars.itemName is not None:
+    if request.vars.itemName is not None and request.vars.itemName != "":
         for i, val in enumerate(itemArr):
             logger.info(val)
             db.SingleOrders.insert(singleOrderCreator=request.vars.singleOrderCreator,
