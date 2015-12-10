@@ -58,7 +58,7 @@
 <!-- request to join a group -->
 <div class="container">
   <div class="row">
-    <div class="col-lg-2 ">Send request to a group:</div>
+    <div class="col-lg-2 labelRequest">Send request to a group:</div>
     <div class="col-lg-4">
      <select class="form-control" id="group_select">
       {% #groupList:id %}
@@ -81,11 +81,11 @@
 <!-- display group boards -->
 <div class="container">
   <div class="row">
-    <div class="board_list">
+    <div >
         {% #groupList:id %}
         <a class="link" href="{{=URL('default', 'groupOrders')}}/{% groupId %}">
-        <div data-id="{% groupId %}" class="message col-md-3 board font"><p id="paragraph{% groupId %}">
-        <i class="fa fa-users"></i>{% groupName %}</p>
+        <div data-id="{% groupId %}" class="col-md-3 groupDisplay font"><p id="paragraph{% groupId %}">
+        <i class="fa fa-users icon"></i></p><br><p class="groupName text-center">{% groupName %}</p><br>
         </div>
         </a>
         {% /groupList %}

@@ -239,7 +239,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 }
 
+.groupName {
+    font-size: 20px;
+    font-weight: bold;
 
+}
+
+.labelRequest {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+}
+
+.icon {
+    font-size: 5px;
+    
+
+}
 .groupOrderDisplay {
     width: 250px;
     height: 280px;
@@ -253,6 +268,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
     /*background-color: lightblue;*/
 }
+
+.groupDisplay {
+    width: 150px;
+    height: 150px;
+    background-color: #303030;
+    border: 1px solid ;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 15px;
+    overflow: hidden;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: white;
+
+    /*background-color: lightblue;*/
+}
+
+
 
 .orderTitle {
     font-weight: bold;
