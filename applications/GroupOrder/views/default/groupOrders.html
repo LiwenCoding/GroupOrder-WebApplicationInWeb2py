@@ -191,42 +191,37 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-      <!--
-        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Reports</a></li>
-
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Export</a></li> -->
         <h2 class="menuLabel"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Menu</h2><br>
         {% #displayMenu:id %}
         <li><button type="button" class="btn btn-primary my-btn2" data-toggle="modal" data-id="{% menuId %}" on-click="showMenuDetail"  data-target=".menuDetail">{% menuName %}</button></li><br>
         {% /displayMenu %}
       </ul>
-
-
     </div>
 
 
 
 
-    <div class="col-sm-9">
-      <div class="board_list">
+    <div class="col-lg-9">
+      <div>
 
         {% #displayOrder:id %}
             <a class="link" href="{{=URL('default', 'singleOrders')}}/{% menuId %}/{% groupOrderId %}">
-            <div class="message col-sm-2 board title">
-                <li>{% groupOrderId %}</li>
-
-
+            <div class="col-sm-2 groupOrderDisplay ">
+                <div class="orderTitle"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;{% menuName %}</div><br>
                 {% #if Date.now() < Date.parse(groupOrderDeadline) %}
-                <li>Active</li>
+                <div><p class="orderFontStyle">Deadline:</p><br><br><p class="deadline text-center">{% groupOrderDeadline %}</p></div><br><br>
                 {% else %}
-                <li>Time Out</li>
+                <div><p class="orderFontStyle">Deadline:</p><br><br><p class="passDeadline text-center">{% groupOrderDeadline %}</p></div><br><br>
                 {% /if %}
+                <div>
+                {% #if Date.now() < Date.parse(groupOrderDeadline) %}
+                <p class="orderFontStyle active">Status: Active</p>
+                {% else %}
+                <p class="orderFontStyle timeOut">Status: Time Out</p>
+                {% /if %}
+                </div><br><br><br>
 
-                <li>{% groupOrderDeadline %}</li>
-                <li>{% menuName %}</li>
-                <li>{% creatorFirstName %}</li>
+                <div><p class="text-right orderFontStyle">Created by&nbsp;{% creatorFirstName %}</p></div>
             </div>
             </a>
         {% /displayOrder %}

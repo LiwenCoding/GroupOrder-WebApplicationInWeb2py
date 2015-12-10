@@ -233,16 +233,58 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     border-radius: 25px;
     padding: 20px;
     margin: 15px;
-    voerflow: hidden;
+    overflow: hidden;
     /*background-color: lightblue;*/
 
 
 }
 
 
+.groupOrderDisplay {
+    width: 250px;
+    height: 280px;
+    border: 1px solid ;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 15px;
+    overflow: hidden;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: #434749;
+
+    /*background-color: lightblue;*/
+}
+
+.orderTitle {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.deadline {
+    color: #0e90d2;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.passDeadline {
+    color: #f76466;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.active {
+        color: #0e90d2;
+
+}
+
+.timeOut {
+        color: #f76466;
+
+}
 
 
-
+.orderFontStyle {
+    font-style: italic;
+}
 /*#topContainer {*/
         /*background-image: url("images/LandingPage.jpg");*/
         /*height: 800px;*/
@@ -262,93 +304,3 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 /*}*/
 
-
-.titlearea{
-
-    width: 240px;
-    height: 50px;
-
-
-}
-
-.contentarea {
-
-    width: 240px;
-    height: 100px;
-
-
-}
-
-
-.icon {
-
-    width: 35px;
-    height: 35px;
-     font-size: 16px;
-    float:right;
-
-}
-
-
-
-.paragraph{
-
-}
-
-.link{
-     font-size: 16px;
-
-
-}
-
-.title {
- font-weight: bold;
-  font-size: 25px;
-}
-
-.twobuttons {
-    float: right;
-}
-
-.headline {
-    font-weight: bold;
-    font-size: 2em;
-    color: #0e90d2;
-}
-
-
-.boardname {
-    font-family: Arial;
-    font-size: 2em;
-    color: #0e90d2;
-    font-weight: bold;
-}
-
-.posttitle {
-    font-weight:bold;
-    font-size: 18px;
-    color: #0e90d2;
-
-}
-
-.postdescription {
-    font-style: italic;
-    color: #303030;
-
-}
-
-.count {
-    font-size: 3em;
-    color: #f76466;
-}
-
-
-.bottompage {
-    font-size: 1.5em;
-}
-
-.timestamp {
-    font-size: 12px;
-    position: absolute;
-    bottom: 0;
-}
