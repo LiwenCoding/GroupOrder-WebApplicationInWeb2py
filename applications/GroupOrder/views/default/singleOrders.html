@@ -103,7 +103,17 @@
   </div>
   -->
 
-<br><hr><br>
+<br><br><hr><br><br>
+    <h2>Personal Total:<h2>
+    <div>
+        {% #displayPersonalTotal: name %}
+            <li>{% name %}:  {%total%}</li>
+        {% /displayPersonalTotal %}
+    </div>
+
+<br><br><hr><br><br>
+
+
     {% #if Date.now() < Date.parse(deadline) %}
     <table class="table table-bordered" id="myTable">
       <thead>
@@ -158,7 +168,8 @@ $(document).ready(function () {
             groupOrderId: "{{=groupOrderId}}",
             displayOrderDetail: {},
             deadline: "{{=deadline}}",
-            groupOrderCreator: "{{=groupOrderCreator}}"
+            groupOrderCreator: "{{=groupOrderCreator}}",
+            displayPersonalTotal: {}
         }
     });
 
@@ -188,6 +199,7 @@ $(document).ready(function () {
         success: function (data) {
             ractive.set('displayOrderDetail', data['displayOrderDetail']);
             ractive.set('loading', false);
+            ractive.set('displayPersonalTotal', data['displayPersonalTotal']);
         }
     }
     );
@@ -213,7 +225,7 @@ $(document).ready(function () {
         });
 
         for (var i = 0; i < inputArray.length; i++) {
-            if (inputArray[i] == 0) {
+            if (inputArray[i] == 0 || inputArray[i] == undefined) {
                 delete inputArray[i];
                 delete nameArray[i];
                 delete priceArray[i];
@@ -239,6 +251,7 @@ $(document).ready(function () {
             success: function (data) {
                 ractive.set('displayOrderDetail', data['displayOrderDetail']);
                 ractive.set('loading', false);
+                ractive.set('displayPersonalTotal', data['displayPersonalTotal']);
                 $('.input-group input').val("");
             },
             error: function () {
@@ -259,6 +272,7 @@ $(document).ready(function () {
                     method: 'POST',
                     success: function (data) {
                         ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                        ractive.set('displayPersonalTotal', data['displayPersonalTotal']);
                     },
                     error: function() {
                     }
@@ -279,6 +293,7 @@ $(document).ready(function () {
                     method: 'POST',
                     success: function (data) {
                         ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                        ractive.set('displayPersonalTotal', data['displayPersonalTotal']);
                     },
                     error: function() {
                     }
@@ -298,6 +313,7 @@ $(document).ready(function () {
                     method: 'POST',
                     success: function (data) {
                         ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                        ractive.set('displayPersonalTotal', data['displayPersonalTotal']);
                     },
                     error: function() {
                     }
