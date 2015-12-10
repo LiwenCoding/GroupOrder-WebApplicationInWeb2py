@@ -1,4 +1,4 @@
-
+from collections import defaultdict
 
 
 def index():
@@ -127,6 +127,8 @@ def getMenuDetail():
     return response.json(dict(displayMenuDetail=d))
 
 
+
+
 @auth.requires_signature()
 def addOrder():
     creatorFirsts = db(db.auth_user.id == auth.user_id).select()
@@ -200,8 +202,9 @@ def addSingleOrders():
                 'groupOrderId': r.id,
                 }
                for r in order_rows}
-    return response.json(dict(displayOrderDetail=d))
-
+    # return response.json(dict(displayOrderDetail=d))
+    d_total = getPersonalTotal(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d, displayPersonalTotal=d_total))
 
 
 def getOrderDetail():
@@ -216,14 +219,36 @@ def getOrderDetail():
                 'groupOrderId': r.id,
                 }
                for r in order_rows}
-    return response.json(dict(displayOrderDetail=d))
+    d_total = getPersonalTotal(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d, displayPersonalTotal=d_total))
+
+
+def getPersonalTotal(groupOrderId):
+    order_rows = db(db.SingleOrders.groupOrderId == groupOrderId).select()
+    d = defaultdict(float)
+    for r in order_rows:
+        if r.status == 'failure':
+            continue
+        # logger.info("item" + r.itemName +"price: " + r.itemPrice)
+        # logger.info("creator" + r.singleOrderCreator.first_name)
+        d[r.singleOrderCreator.first_name] += float(r.itemPrice) * int(r.itemQuantity)
+
+    d_personal = {item: {'total': d[item]}
+                  for item in d}
+
+    for item in d:
+        logger.info(item + " " + str(d[item]))
+    logger.info(len(d))
+    return d_personal
 
 
 @auth.requires_signature()
 def deleteSingleOrder():
     db(db.SingleOrders.id == request.vars.singleOrderId).delete()
     d = getSingleOrderDict(request.vars.groupOrderId)
-    return response.json(dict(displayOrderDetail=d))
+    # return response.json(dict(displayOrderDetail=d))
+    d_total = getPersonalTotal(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d, displayPersonalTotal=d_total))
     # order_rows = db(db.SingleOrders.groupOrderId == request.vars.groupOrderId).select()
     # d = {r.id: {'creatorId': r.singleOrderCreator,
     #             'creatorFirstName': r.singleOrderCreator.first_name,
@@ -241,15 +266,18 @@ def confirmSingleOrder():
     logger.info(request.vars.singleOrderId + "requesting for success")
     db(db.SingleOrders.id == request.vars.singleOrderId).update(status="success")
     d = getSingleOrderDict(request.vars.groupOrderId)
-    return response.json(dict(displayOrderDetail=d))
+    # return response.json(dict(displayOrderDetail=d))
+    d_total = getPersonalTotal(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d, displayPersonalTotal=d_total))
 
 
 def cancelSingleOrder():
     logger.info(request.vars.singleOrderId + "requesting for success")
     db(db.SingleOrders.id == request.vars.singleOrderId).update(status="failure")
     d = getSingleOrderDict(request.vars.groupOrderId)
-    return response.json(dict(displayOrderDetail=d))
-
+    # return response.json(dict(displayOrderDetail=d))
+    d_total = getPersonalTotal(request.vars.groupOrderId)
+    return response.json(dict(displayOrderDetail=d, displayPersonalTotal=d_total))
 
 
 def getSingleOrderDict(groupId):
