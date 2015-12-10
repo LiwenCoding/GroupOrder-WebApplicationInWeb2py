@@ -193,9 +193,9 @@
 
         <li><a href="#">Analytics</a></li>
         <li><a href="#">Export</a></li> -->
-        <h2 class="menuLabel">Menus</h2>
+        <h2 class="menuLabel"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Menu</h2><br>
         {% #displayMenu:id %}
-        <li><button type="button" class="btn btn-primary my-btn2" data-toggle="modal" data-id="{% menuId %}" on-click="showMenuDetail"  data-target=".menuDetail">{% menuName %}</button></li>
+        <li><button type="button" class="btn btn-primary my-btn2" data-toggle="modal" data-id="{% menuId %}" on-click="showMenuDetail"  data-target=".menuDetail">{% menuName %}</button></li><br>
         {% /displayMenu %}
       </ul>
 

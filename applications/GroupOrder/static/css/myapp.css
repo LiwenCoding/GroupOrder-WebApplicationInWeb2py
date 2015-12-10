@@ -102,7 +102,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .menuLabel {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 30px;
     color: #434749;
 }
 
@@ -173,6 +173,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     padding: 12px 22px;
     color: white;
     border: none;
+    width: 12em;
 
 }
 
