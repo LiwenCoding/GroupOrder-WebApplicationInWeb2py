@@ -192,6 +192,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 }
 
+.navbarFont {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: white;
+}
+
 
 
 .board {
