@@ -122,7 +122,8 @@ def addMenuList():
 def getMenuDetail():
     # testEntry = db(db.MenuDetails.menuId == request.vars.menuId).select()
     # logger.info(testEntry[1].itemName == "")
-    rows = db((db.MenuDetails.menuId == request.vars.menuId) & (db.MenuDetails.itemName != "") & (db.MenuDetails.itemPrice != "")).select()
+    # rows = db((db.MenuDetails.menuId == request.vars.menuId) & (db.MenuDetails.itemName != "") & (db.MenuDetails.itemPrice != "")).select()
+    rows = db((db.MenuDetails.menuId == request.vars.menuId)).select()
     d = {r.id: {'itemName': r.itemName,
                 'itemPrice': r.itemPrice,
                 'itemId': r.id}
