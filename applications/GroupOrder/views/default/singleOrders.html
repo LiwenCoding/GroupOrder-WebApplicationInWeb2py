@@ -175,11 +175,6 @@ $(document).ready(function () {
         nameArray = nameArray.filter(function(n){ return n != undefined });
         priceArray = priceArray.filter(function(n){ return n != undefined });
 
-//        alert(nameArray[1]);
-//        alert(inputArray[1]);
-//        alert(priceArray[1]);
-//          alert((inputArray[0]*priceArray[0]));
-//
         $.ajax("{{=URL('default', 'addSingleOrders', user_signature=True)}}",
         {
             data: {
@@ -195,6 +190,7 @@ $(document).ready(function () {
             success: function (data) {
                 ractive.set('displayOrderDetail', data['displayOrderDetail']);
                 ractive.set('loading', false);
+                $('.input-group input').val("");
             },
             error: function () {
             }
