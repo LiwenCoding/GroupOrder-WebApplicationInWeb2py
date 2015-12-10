@@ -75,31 +75,193 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 }
 
-
-
-hr.style-five {
-    border: 0;
-    height: 0; /* Firefox... */
-    box-shadow: 0 0 10px 1px black;
-}
-hr.style-five:after {  /* Not really supposed to work, but does */
-    content: "\00a0";  /* Prevent margin collapse */
+.font {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    font-size: 25px;
 }
 
+.headerTitle {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+     text-align: center;
+    margin:50px;
+}
+
+.headerSubTitle {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    margin:50px;
+}
+
+.menuLabel {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    color: #434749;
+}
+
+/*.btn {*/
+    /*padding: 14px 24px;*/
+    /*border: 0 none;*/
+    /*font-weight: 700;*/
+    /*letter-spacing: 1px;*/
+    /*text-transform: uppercase;*/
+/*}*/
+
+/*.btn:focus, .btn:active:focus, .btn.active:focus {*/
+    /*outline: 0 none;*/
+/*}*/
+
+/*.btn-primary {*/
+    /*background: #0099cc;*/
+    /*color: #ffffff;*/
+/*}*/
+
+/*.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {*/
+    /*background: #33a6cc;*/
+/*}*/
+
+/*.btn-primary:active, .btn-primary.active {*/
+    /*background: #007299;*/
+    /*box-shadow: none;*/
+/*}*/
+
+/*.btn.outline {*/
+    /*background: none;*/
+    /*padding: 12px 22px;*/
+/*}*/
 
 
+/*.btn-primary.outline {*/
+    /*border: 2px solid #0099cc;*/
+    /*color: #0099cc;*/
+/*}*/
+
+
+/*.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {*/
+    /*color: #33a6cc;*/
+    /*border-color: #33a6cc;*/
+/*}*/
+/*.btn-primary.outline:active, .btn-primary.outline.active {*/
+    /*border-color: #007299;*/
+    /*color: #007299;*/
+    /*box-shadow: none;*/
+/*}*/
+
+
+.my-btn{
+    background: none;
+    padding: 12px 22px;
+    color: white;
+    border: 2px solid steelblue;
+
+}
+
+.my-btn:hover {
+  border-color: #303030;
+  background-color: #0e90d2;
+}
+
+.my-btn2{
+    background: #0e90d2;
+    padding: 12px 22px;
+    color: white;
+    border: none;
+    width: 12em;
+
+}
+
+.my-btn2:hover {
+  border-color: #303030;
+  background-color:#33a6cc;
+}
+
+
+
+.my-btnNormal {
+    background: #0099cc;
+    color: #ffffff;
+    border: 0 none;
+}
+
+.my-btnNormal:hover {
+  border-color: #303030;
+  background-color: #33a6cc;
+}
+.buttonWrapper {
+    text-align: center;
+}
+
+.buttonFont {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: lighter;
+}
+
+.myheader {
+
+    width: 100%;
+    height:450px;
+    background-color: #29292a;
+}
+
+.bodyStyle {
+    background-color: #dde0dd;
+
+}
+
+.navbarFont {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: white;
+}
+
+.labelFont {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+}
 
 
 .board {
+    width: 200px;
+    height: 200px;
+    border: 1px solid ;
     border-radius: 25px;
-    border: 2px solid #8AC007;
     padding: 20px;
-    margin: 5px;
-    width: 280px;
-    min-height: 350px;
-    overflow: hidden;
+    margin: 15px;
+    voerflow: hidden;
+    /*background-color: lightblue;*/
+
 
 }
+
+
+
+
+
+/*#topContainer {*/
+        /*background-image: url("images/LandingPage.jpg");*/
+        /*height: 800px;*/
+        /*width: 100%;*/
+        /*background-size: cover;*/
+/*}*/
+
+/*.board {*/
+    /*border-radius: 25px;*/
+    /*border: 2px solid #8AC007;*/
+    /*padding: 20px;*/
+    /*margin: 5px;*/
+    /*width: 280px;*/
+    /*min-height: 350px;*/
+    /*overflow: hidden;*/
+
+
+/*}*/
+
 
 .titlearea{
 
