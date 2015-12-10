@@ -1,11 +1,10 @@
 {{extend 'layout.html'}}
-
-<div id="target"></div>
-
-
-
-<script id="template" type="text/ractive">
-<div>
+{{block header}}
+<header class="container-fluid myheader">
+  <div class="jumbotron ">
+ <!-- <img src="{{=URL('static','images/IMG_2821.JPG')}}" class="coverImage" /> -->
+    <h2 class="headerTitle">Welcome to GroupOrder</h2>
+    <p class="headerSubTitle">GroupOrder makes your order organized and easy to place. </p>
     {{if auth.user_id is None:}}
     <div id="main_login">
     {{=A('Sign Up', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['register']))}}
@@ -13,9 +12,21 @@
     </div>
     {{else:}}
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Group
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Group
     </button>
     {{pass}}
+  </div>
+</header>
+{{end}}
+
+
+
+<div id="target"></div>
+<script id="template" type="text/ractive">
+
+
+<div>
+
     {% #if loading %}
     <div id="load_spinner">
     <i class="fa fa-spinner fa-pulse fa-2x"></i>
@@ -68,14 +79,13 @@
 </div>
 <br><br>
 
-
 <!-- display group boards -->
 <div class="container">
   <div class="row">
     <div class="board_list">
         {% #groupList:id %}
         <a class="link" href="{{=URL('default', 'groupOrders')}}/{% groupId %}">
-        <div on-click="startedit" data-id="{% groupId %}" class="message col-md-3 board title"><p id="paragraph{% groupId %}">{% groupName %}</p>
+        <div on-click="startedit" data-id="{% groupId %}" class="message col-md-3 board font"><p id="paragraph{% groupId %}">{% groupName %}</p>
         </div>
         </a>
         {% /groupList %}

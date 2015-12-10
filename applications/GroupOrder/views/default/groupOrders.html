@@ -195,9 +195,6 @@
 
 
 
-    <div>menuCreator: {% menuCreator %}</div>
-    <div>groupId: {% groupId %}</div>
-
 
     <div class="col-sm-9">
       <h1 class="page-header">GroupOrders</h1>
@@ -224,16 +221,25 @@
     <div class="modal-content">
      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create a Menu</h4>
+        <h4 class="modal-title" id="myModalLabel">Menu</h4>
       </div>
       <div class="modal-body">
-
-      <h4>menu content</h4>
-      {% #displayMenuDetail:id %}
-        <div><p>Item: {% itemName %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price: $ {% itemPrice %}</p></div>
-      {% /displayMenuDetail %}
-
-
+        <table class="table table-bordered" id="myTable">
+          <thead>
+              <tr>
+                <th class="col-md-9">Item</th>
+                <th class="col-md-1">Price</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% #displayMenuDetail:id %}
+              <tr>
+                <td class="itemNameData">{% itemName %}</td>
+                <td class="itemPriceData">$&nbsp;&nbsp;{% itemPrice %}</td>
+              </tr>
+              {% /displayMenuDetail %}
+          <tbody>
+        </table>
       </div>
     </div>
   </div>
