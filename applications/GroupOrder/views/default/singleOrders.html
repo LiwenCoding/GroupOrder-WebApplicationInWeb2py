@@ -55,34 +55,34 @@
   -->
 
 <br><hr><br>
+    {% #if Date.now() < Date.parse(deadline) %}
+    <table class="table table-bordered" id="myTable">
+      <thead>
+          <tr>
+            <th class="col-md-1">#</th>
+            <th class="col-md-9">Item</th>
+            <th class="col-md-1">Price</th>
+            <th class="col-md-1">Quantity</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% #displayMenuDetail:id %}
+          <tr>
+            <td class="itemIdData">{% itemId %}</td>
+            <td class="itemNameData">{% itemName %}</td>
+            <td class="itemPriceData">{% itemPrice %}</td>
+            <td><div class="input-group">
+                <input type="number" class="form-control" id="itemQuantityData" placeholder="0"></div>
+            </td>
+          </tr>
+          {% /displayMenuDetail %}
+      <tbody>
+    </table>
+    <div>Total:&nbsp;$&nbsp;</div>
 
-<table class="table table-bordered" id="myTable">
-  <thead>
-      <tr>
-        <th class="col-md-1">#</th>
-        <th class="col-md-9">Item</th>
-        <th class="col-md-1">Price</th>
-        <th class="col-md-1">Quantity</th>
-      </tr>
-  </thead>
-  <tbody>
-      {% #displayMenuDetail:id %}
-      <tr>
-        <td class="itemIdData">{% itemId %}</td>
-        <td class="itemNameData">{% itemName %}</td>
-        <td class="itemPriceData">{% itemPrice %}</td>
-        <td><div class="input-group">
-            <input type="number" class="form-control" id="itemQuantityData" placeholder="0"></div>
-        </td>
-      </tr>
-      {% /displayMenuDetail %}
-  <tbody>
-</table>
-<div>Total:&nbsp;$&nbsp;</div>
+    <button type="button" class="btn btn-primary btn-lg" on-click="submitOrder">Submit</button>
 
-<button type="button" class="btn btn-primary btn-lg" on-click="submitOrder">Submit</button>
-
-
+    {% /if %}
 
 
   </div>
@@ -108,9 +108,7 @@ $(document).ready(function () {
             singleOrderCreator: "{{=auth.user_id}}",
             groupOrderId: "{{=groupOrderId}}",
             displayOrderDetail: {},
-
-
-
+            deadline: "{{=deadline}}"
         }
     });
 
@@ -125,6 +123,7 @@ $(document).ready(function () {
             success: function (data) {
                 ractive.set('displayMenuDetail', data['displayMenuDetail']);
                 ractive.set('loading', false);
+
             }
         }
     );

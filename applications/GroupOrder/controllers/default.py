@@ -152,7 +152,9 @@ def resetSingleOrder():
 def singleOrders():
     menuId = request.args[0]
     groupOrderId = request.args[1]
-    return dict(menuId=menuId,groupOrderId=groupOrderId)
+    deadline = db(db.GroupOrders.id == groupOrderId).select().first().groupOrderDeadline
+    logger.info(deadline)
+    return dict(menuId=menuId, groupOrderId=groupOrderId, deadline=deadline)
 
 
 def addSingleOrders():
@@ -173,27 +175,6 @@ def addSingleOrders():
                                    itemName=itemArr[i],
                                    itemPrice=priceArr[i],
                                    itemQuantity=quantity_arr[i])
-
-    # db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
-    #                        status = request.vars.status,
-    #                        groupOrderId = request.vars.groupOrderId,
-    #                        itemName = request.vars.itemName1,
-    #                        itemPrice = request.vars.itemPrice1,
-    #                        itemQuantity = request.vars.itemQuantity1)
-    #
-    # db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
-    #                    status = request.vars.status,
-    #                    groupOrderId = request.vars.groupOrderId,
-    #                    itemName = request.vars.itemName2,
-    #                    itemPrice = request.vars.itemPrice2,
-    #                    itemQuantity = request.vars.itemQuantity2)
-    #
-    # db.SingleOrders.insert(singleOrderCreator = request.vars.singleOrderCreator,
-    #                    status = request.vars.status,
-    #                    groupOrderId = request.vars.groupOrderId,
-    #                    itemName = request.vars.itemName3,
-    #                    itemPrice = request.vars.itemPrice3,
-    #                    itemQuantity = request.vars.itemQuantity3)
 
     order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
     d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
