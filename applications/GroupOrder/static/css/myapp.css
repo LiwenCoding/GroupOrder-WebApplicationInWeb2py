@@ -197,6 +197,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     color: white;
 }
 
+.labelFont {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+}
 
 
 .board {

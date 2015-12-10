@@ -22,14 +22,11 @@
 {{end}}
 
 
-<div class="container-fluid">
 <div id="target" class="bodyStyle"></div>
-</div>
 <script id="template" type="text/ractive">
 
 
 <div>
-
     {% #if loading %}
     <div id="load_spinner">
     <i class="fa fa-spinner fa-pulse fa-2x"></i>
@@ -51,7 +48,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" on-click="createGroup">Create</button>
+        <button type="button" class="btn btn-primary my-btnNormal" on-click="createGroup">Create</button>
       </div>
     </div>
   </div>
@@ -61,8 +58,7 @@
 <!-- request to join a group -->
 <div class="container">
   <div class="row">
-
-    <div class="col-lg-2">Send request to group:</div>
+    <div class="col-lg-2 ">Send request to a group:</div>
     <div class="col-lg-4">
      <select class="form-control" id="group_select">
       {% #groupList:id %}

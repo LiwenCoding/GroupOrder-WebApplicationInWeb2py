@@ -1,4 +1,28 @@
 {{extend 'layout.html'}}
+{{block header}}
+<header class="container-fluid myheader">
+  <div class="jumbotron ">
+ <!-- <img src="{{=URL('static','images/IMG_2821.JPG')}}" class="coverImage" /> -->
+    <h2 class="headerTitle">Your Group's Order</h2>
+    <p class="headerSubTitle">Select a menu or customize yours, follow an order or start a new one.  </p><br><br>
+    <div class="buttonWrapper">
+    {{if auth.user_id is None:}}
+    <div id="main_login">
+    {{=A('Sign Up', _class='btn btn-primary btn-lg my-btn', _href=URL('default', 'user', args=['register']))}}
+    {{=A('Sign In', _class='btn btn-primary btn-lg my-btn', _href=URL('default', 'user', args=['login']))}}
+    </div>
+    {{else:}}
+    <button type="button" class="btn btn-primary btn-lg my-btn buttonFont" data-toggle="modal" data-target=".bs-example-modal-lg-menu">
+     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Menu
+    </button>
+    <button type="button" class="btn btn-primary btn-lg my-btn buttonFont" data-target=".bs-example-modal-lg-order" onclick="javascript:showModal();">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create an order
+    </button>
+    {{pass}}
+    </div>
+  </div>
+</header>
+{{end}}
 
 <div id="target"></div>
 
@@ -6,21 +30,6 @@
 <script id="template" type="text/ractive">
 
 <div>
-    {{if auth.user_id is None:}}
-    <div id="main_login">
-    {{=A('Sign Up', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['register']))}}
-    {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
-    </div>
-    {{else:}}
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg-menu">
-     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Menu
-    </button>
-
-    <button type="button" class="btn btn-primary btn-lg" data-target=".bs-example-modal-lg-order" onclick="javascript:showModal();">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create an order
-    </button>
-
-    {{pass}}
     {% #if loading %}
     <div id="load_spinner">
     <i class="fa fa-spinner fa-pulse fa-2x"></i>
@@ -127,7 +136,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" on-click="saveMenu">Save</button>
+        <button type="button" class="btn btn-primary my-btnNormal" on-click="saveMenu">Save</button>
       </div>
     </div>
   </div>
@@ -166,7 +175,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" on-click="saveOrder">Save</button>
+        <button type="button" class="btn btn-primary my-btnNormal" on-click="saveOrder">Save</button>
       </div>
     </div>
   </div>
@@ -184,7 +193,7 @@
 
         <li><a href="#">Analytics</a></li>
         <li><a href="#">Export</a></li> -->
-        <h2>Menus</h2>
+        <h2 >Menus</h2>
         {% #displayMenu:id %}
         <li><button type="button" class="btn btn-primary" data-toggle="modal" data-id="{% menuId %}" on-click="showMenuDetail"  data-target=".menuDetail">{% menuName %}</button></li>
         {% /displayMenu %}
@@ -197,7 +206,6 @@
 
 
     <div class="col-sm-9">
-      <h1 class="page-header">GroupOrders</h1>
       <div class="board_list">
         {% #displayOrder:id %}
                 <a class="link" href="{{=URL('default', 'singleOrders')}}/{% menuId %}/{% groupOrderId %}">
