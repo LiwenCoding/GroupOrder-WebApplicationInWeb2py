@@ -99,6 +99,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin:50px;
 }
 
+.menuLabel {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+    color: #434749;
+}
+
 /*.btn {*/
     /*padding: 14px 24px;*/
     /*border: 0 none;*/
@@ -160,6 +167,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-color: #303030;
   background-color: #0e90d2;
 }
+
+.my-btn2{
+    background: #0e90d2;
+    padding: 12px 22px;
+    color: white;
+    border: none;
+
+}
+
+.my-btn2:hover {
+  border-color: #303030;
+  background-color:#33a6cc;
+}
+
+
 
 .my-btnNormal {
     background: #0099cc;
