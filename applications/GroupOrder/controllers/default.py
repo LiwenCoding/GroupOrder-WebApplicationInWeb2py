@@ -106,7 +106,9 @@ def addMenuList():
 
 @auth.requires_signature()
 def getMenuDetail():
-    rows = db(db.MenuDetails.menuId == request.vars.menuId).select()
+    # testEntry = db(db.MenuDetails.menuId == request.vars.menuId).select()
+    # logger.info(testEntry[1].itemName == "")
+    rows = db((db.MenuDetails.menuId == request.vars.menuId) & (db.MenuDetails.itemName != "") & (db.MenuDetails.itemPrice != "")).select()
     d = {r.id: {'itemName': r.itemName,
                 'itemPrice': r.itemPrice,
                 'itemId': r.id}
@@ -133,7 +135,7 @@ def addOrder():
     order_rows = db(db.GroupOrders.groupId==request.vars.groupId).select()
     order_d = {r.id: {'groupOrderDeadline': r.groupOrderDeadline,
                       'menuId': r.menuId,
-                      'creatorFirstName': r.creatorLastName,
+                      'creatorFirstName': r.creatorFirstName,
                       'menuName': r.menuName,
                       'groupOrderId': r.id,
                       }
@@ -177,7 +179,8 @@ def addSingleOrders():
                                    itemQuantity=quantity_arr[i])
 
     order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
-    d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
+    d = {r.id: {'creatorId': r.singleOrderCreator,
+                'creatorFirstName': r.singleOrderCreator.first_name,
                 'itemName': r.itemName,
                 'itemPrice': r.itemPrice,
                 'itemQuantity': r.itemQuantity,
@@ -191,8 +194,9 @@ def addSingleOrders():
 
 def getOrderDetail():
 
-    order_rows = db(db.SingleOrders.groupOrderId==request.vars.groupOrderId).select()
-    d = {r.id: {'creatorFirstName': r.singleOrderCreator.first_name,
+    order_rows = db(db.SingleOrders.groupOrderId == request.vars.groupOrderId).select()
+    d = {r.id: {'creatorId': r.singleOrderCreator,
+                'creatorFirstName': r.singleOrderCreator.first_name,
                 'itemName': r.itemName,
                 'itemPrice': r.itemPrice,
                 'itemQuantity': r.itemQuantity,
@@ -203,6 +207,20 @@ def getOrderDetail():
     return response.json(dict(displayOrderDetail=d))
 
 
+@auth.requires_signature()
+def deleteSingleOrder():
+    db(db.SingleOrders.id == request.vars.singleOrderId).delete()
+    order_rows = db(db.SingleOrders.groupOrderId == request.vars.groupOrderId).select()
+    d = {r.id: {'creatorId': r.singleOrderCreator,
+                'creatorFirstName': r.singleOrderCreator.first_name,
+                'itemName': r.itemName,
+                'itemPrice': r.itemPrice,
+                'itemQuantity': r.itemQuantity,
+                'status': r.status,
+                'groupOrderId': r.id,
+                }
+               for r in order_rows}
+    return response.json(dict(displayOrderDetail=d))
 
 
 @auth.requires_signature()

@@ -29,6 +29,7 @@
         <th>item Name</th>
         <th>item Price</th>
         <th>Quantity</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -38,6 +39,13 @@
         <td>{% itemName %}</td>
         <td>{% itemPrice %}</td>
         <td>{% itemQuantity %}</td>
+        <td>
+            {% #if creatorId ==  singleOrderCreator%}
+            <button type="button" class="btn btn-default" value={%id%} on-click="deleteSingleOrder">Delete</button>
+            {% else %}
+            <button type="button" class="btn btn-default" value={%id%} disabled="disabled">Delete</button>
+            {% /if %}
+        </td>
       </tr>
     {% /displayOrderDetail %}
     </tbody>
@@ -198,7 +206,24 @@ $(document).ready(function () {
     });
 
 
+    ractive.on("deleteSingleOrder", function (e) {
+        singleOrderId = $(e.node).val();
+        $.ajax("{{=URL('default', 'deleteSingleOrder', user_signature=True)}}",
+                {
+                    data: {
+                        singleOrderId: singleOrderId,
+                        groupOrderId: ractive.get('groupOrderId')
+                    },
+                    method: 'POST',
+                    success: function (data) {
+                        ractive.set('displayOrderDetail', data['displayOrderDetail']);
+                    },
+                    error: function() {
+                    }
+                }
 
+        );
+    });
 
 
 
