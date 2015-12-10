@@ -75,6 +75,10 @@ def loadMenuOrderList():
 def addMenuList():
 
     # menuList = json.load(request.vars.menuList)
+    itemArray = request.vars.itemName.split(';')
+    priceArray = request.vars.itemPrice.split(';')
+    # for i, item in enumerate(itemArray):
+    #     logger.info(item + " " + priceArray[i])
 
     db.Menus.insert(menuName = request.vars.menuName,
                     menuCreator = request.vars.menuCreator,
@@ -83,17 +87,24 @@ def addMenuList():
     rows = db(db.Menus.id > 0).select()
     thisMenu = rows.last()
 
-    db.MenuDetails.insert(itemName = request.vars.item1,
-                          itemPrice = request.vars.price1,
-                           menuId = thisMenu.id)
-
-    db.MenuDetails.insert(itemName = request.vars.item2,
-                      itemPrice = request.vars.price2,
-                     menuId = thisMenu.id)
-
-    db.MenuDetails.insert(itemName=request.vars.item3,
-                      itemPrice=request.vars.price3,
-                      menuId=thisMenu.id)
+    for i in range(0, len(itemArray)):
+        logger.info(itemArray[i] + " " + priceArray[i])
+        db.MenuDetails.insert(itemName=itemArray[i],
+                              itemPrice=priceArray[i],
+                              menuId = thisMenu.id)
+    #
+    #
+    # db.MenuDetails.insert(itemName = request.vars.item1,
+    #                       itemPrice = request.vars.price1,
+    #                        menuId = thisMenu.id)
+    #
+    # db.MenuDetails.insert(itemName = request.vars.item2,
+    #                   itemPrice = request.vars.price2,
+    #                  menuId = thisMenu.id)
+    #
+    # db.MenuDetails.insert(itemName=request.vars.item3,
+    #                   itemPrice=request.vars.price3,
+    #                   menuId=thisMenu.id)
 
     rows = db(db.Menus.groupId == request.vars.groupId).select()
 

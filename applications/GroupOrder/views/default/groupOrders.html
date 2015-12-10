@@ -54,28 +54,31 @@
           </div>
 
 
-
+          {{for i in range(0, 10):}}
           <div id="list1">
           <div class="col-xs-10">
             <div class="form-group">
-              <label class="sr-only" for="item1">item1</label>
+              <label class="sr-only" for="item1">item</label>
               <div class="input-group ">
                 <div class="input-group-addon">1</div>
-                <input type="text" class="form-control" id="item1" placeholder="Item Name">
+                <input type="text" class="form-control" id="item" placeholder="Item Name">
               </div>
+              <p id="demo-item{{=i}}"></p>
             </div>
           </div>
           <div class="col-xs-2">
             <div class="form-group">
-             <label class="sr-only" for="price1">price1</label>
+             <label class="sr-only" for="price1">price</label>
              <div class="input-group ">
                  <div class="input-group-addon">$</div>
-                 <input type="number" class="form-control" id="price1" placeholder="Price">
+                 <input type="number" class="form-control" id="price" placeholder="Price">
              </div>
+             <p id="demo-price{{=i}}"></p>
             </div>
           </div>
         </div>
-
+        {{pass}}
+        <!--
          <div id="list2">
           <div class="col-xs-10">
             <div class="form-group">
@@ -117,6 +120,7 @@
             </div>
           </div>
         </div>
+        -->
 
         </form>
 
@@ -292,38 +296,72 @@
                 }
         );
 
+        function validateForm(){
+            var text;
+            var validInput = true;
+            for (var i = 0; i < 10; i++) {
+                var x = document.getElementById("price" + i).value;
+                if (!isNaN(parseFloat(x)) && isFinite(x)) {
+                    if (x >= 0 || x <= 100) {
+                        text = "Input OK";
+                    }
+                }
+                else {
+                    text = "Invalid Input";
+                    validInput = false;
+                }
+                document.getElementById("demo-price" + i).innerHTML = text;
+            }
+            return validInput;
+        }
+
+
+
 
         ractive.on("saveMenu", function () {
-//        var t = $("input").eq(5).val();
-//do validation price should be number,  input1 and input2 have to be filled both.
-//        var menuList = [];
-//        $("input").each(function(index, value) {
-//            if ($(this).val() != "") {
-//            menuList.push($(this).val());
-////            alert(menuList[index]);
-//            } else {
-//                menuList.push("null");
-////                alert("null");
-//            }
-//        });
-//        alert($("#menuName").val());
-//        alert($("#item1").val());
-//        alert($("#price1").val());
-//        alert($("#item2").val());
-//        alert($("#price2").val());
+            var itemArray = [];
+            var priceArray = [];
+            $('input[type=text][id=item]').each(function() {
+                itemArray.push($(this).val());
+            });
+            $('input[type=number][id=price]').each(function() {
+                priceArray.push($(this).val());
+            });
+//            alert(itemArray[1]);
+//            alert("item: " + itemArray.length);
+//            alert("price array: " + priceArray.length);
+
+            for (var i = 0; i < itemArray.length; i++) {
+                if (itemArray[i] == undefined || priceArray[i] == undefined || itemArray[i] == 0) {
+                    delete itemArray[i];
+                    delete priceArray[i];
+                }
+            }
+
+            priceArray = priceArray.filter(function(n){ return n != undefined });
+            itemArray = itemArray.filter(function(n){ return n != undefined });
+
+//            alert(itemArray[1]);
+//            alert(priceArray[1]);
+//            alert("item " + itemArray.length);
+
+
+
             $.ajax("{{=URL('default', 'addMenuList', user_signature=True)}}",
                     {
                         data: {
 //                menuList: JSON.stringify(menuList),
                             menuName: $("#menuName").val(),
-                            item1: $("#item1").val(),
-                            price1: $("#price1").val(),
-                            item2: $("#item2").val(),
-                            price2: $("#price2").val(),
-                            item3: $("#item3").val(),
-                            price3: $("#price3").val(),
+                            itemName: itemArray.join(';'),
+                            itemPrice: priceArray.join(';'),
+//                            item1: $("#item1").val(),
+//                            price1: $("#price1").val(),
+//                            item2: $("#item2").val(),
+//                            price2: $("#price2").val(),
+//                            item3: $("#item3").val(),
+//                            price3: $("#price3").val(),
                             groupId: ractive.get('groupId'),
-                            menuCreator: ractive.get('menuCreator'),
+                            menuCreator: ractive.get('menuCreator')
                         },
                         method: 'POST',
                         success: function (data) {
