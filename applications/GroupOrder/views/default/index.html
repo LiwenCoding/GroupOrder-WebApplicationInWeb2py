@@ -4,24 +4,27 @@
   <div class="jumbotron ">
  <!-- <img src="{{=URL('static','images/IMG_2821.JPG')}}" class="coverImage" /> -->
     <h2 class="headerTitle">Welcome to GroupOrder</h2>
-    <p class="headerSubTitle">GroupOrder makes your order organized and easy to place. </p>
+    <p class="headerSubTitle">GroupOrder makes your order organized and easy to place. </p><br><br>
+    <div class="buttonWrapper">
     {{if auth.user_id is None:}}
     <div id="main_login">
-    {{=A('Sign Up', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['register']))}}
-    {{=A('Sign In', _class='btn btn-primary btn-lg', _href=URL('default', 'user', args=['login']))}}
+    {{=A('Sign Up', _class='btn btn-primary btn-lg my-btn', _href=URL('default', 'user', args=['register']))}}
+    {{=A('Sign In', _class='btn btn-primary btn-lg my-btn', _href=URL('default', 'user', args=['login']))}}
     </div>
     {{else:}}
-    <button type="button" class="btn btn-primary btn-lg my-btn" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-primary btn-lg my-btn buttonFont" data-toggle="modal" data-target="#myModal">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Group
     </button>
     {{pass}}
+    </div>
   </div>
 </header>
 {{end}}
 
 
-
-<div id="target"></div>
+<div class="container-fluid">
+<div id="target" class="bodyStyle"></div>
+</div>
 <script id="template" type="text/ractive">
 
 
@@ -67,7 +70,7 @@
       {% /groupList %}
     </select>
    </div>
-   <button type="button" class="btn btn-primary" on-click="sendJoinRequest">Send</button>
+   <button type="button" class="btn btn-primary my-btnNormal" on-click="sendJoinRequest">Send</button>
 
    <a class="link" href="{{=URL('default', 'manage')}}">
      <button type="button" class="btn btn-default" aria-label="Left Align">
