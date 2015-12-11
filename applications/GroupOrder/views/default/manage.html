@@ -2,9 +2,7 @@
 <div id="target"></div>
 
 <script id="template" type="text/ractive">
-
-<div class="container">
-    <br><br><br>
+<div class="container"><br><br><br>
   <h2>Administrate My Groups</h2>
   <table class="table table-hover">
     <thead>
@@ -23,7 +21,6 @@
         <td style="color:blue">{% groupCreatorName %}</td>
         <td>{% applicantName %}</td>
         <td>{% status %}</td>
-
         {% #if status == 'pending'%}
         <td>
             <button type="button" value={%id%} class="btn btn-default" on-click="approveRequest">Approve</button>
@@ -66,7 +63,6 @@
     </tbody>
   </table>
 </div>
-
 </script>
 
 
@@ -83,6 +79,7 @@ $(function() {
         }
     });
 
+
     $.ajax( "{{=URL('default', 'loadRequest', user_signature=True)}}",
             {
                 method: 'POST',
@@ -93,6 +90,7 @@ $(function() {
             }
 
     );
+
 
     ractive.on("approveRequest", function (e) {
         requestId = $(e.node).val();
@@ -109,6 +107,7 @@ $(function() {
 
         );
     });
+
 
     ractive.on("rejectRequest", function (e) {
         requestId = $(e.node).val();

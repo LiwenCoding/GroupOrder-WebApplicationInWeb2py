@@ -68,13 +68,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #bb8833;
 }
 
-
-.sideBarMenuList {
-
-
-
-}
-
 .font {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
@@ -86,7 +79,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     font-weight: bold;
     font-size: 50px;
     color: white;
-     text-align: center;
+    text-align: center;
     margin:50px;
 }
 
@@ -160,13 +153,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     padding: 12px 22px;
     color: white;
     border: 2px solid steelblue;
-
 }
+
 
 .my-btn:hover {
   border-color: #303030;
   background-color: #0e90d2;
 }
+
 
 .my-btn2{
     background: #0e90d2;
@@ -174,14 +168,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     color: white;
     border: none;
     width: 12em;
-
 }
+
 
 .my-btn2:hover {
   border-color: #303030;
   background-color:#33a6cc;
 }
-
 
 
 .my-btnNormal {
@@ -190,39 +183,44 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     border: 0 none;
 }
 
+
 .my-btnNormal:hover {
   border-color: #303030;
   background-color: #33a6cc;
 }
+
+
 .buttonWrapper {
     text-align: center;
 }
+
 
 .buttonFont {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: lighter;
 }
 
-.myheader {
 
+.myheader {
     width: 100%;
     height:450px;
     background-color: #29292a;
 }
 
+
 .bodyStyle {
     background-color: #dde0dd;
-
 }
+
 
 .navbarFont {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: white;
 }
 
+
 .labelFont {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-
 }
 
 
@@ -234,27 +232,25 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     padding: 20px;
     margin: 15px;
     overflow: hidden;
-    /*background-color: lightblue;*/
-
-
 }
+
 
 .groupName {
     font-size: 20px;
     font-weight: bold;
-
 }
+
 
 .labelRequest {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-
 }
+
 
 .icon {
     font-size: 5px;
-    
-
 }
+
+
 .groupOrderDisplay {
     width: 250px;
     height: 280px;
@@ -263,11 +259,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     padding: 20px;
     margin: 15px;
     overflow: hidden;
-        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #434749;
-
-    /*background-color: lightblue;*/
 }
+
 
 .groupDisplay {
     width: 150px;
@@ -278,12 +273,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     padding: 20px;
     margin: 15px;
     overflow: hidden;
-        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: white;
-
-    /*background-color: lightblue;*/
 }
-
 
 
 .orderTitle {
@@ -291,11 +283,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     font-size: 20px;
 }
 
+
 .deadline {
     color: #0e90d2;
     font-weight: bold;
     font-size: 20px;
 }
+
 
 .passDeadline {
     color: #f76466;
@@ -303,36 +297,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     font-size: 20px;
 }
 
-.active {
-        color: #0e90d2;
 
+.active {
+    color: #0e90d2;
 }
 
-.timeOut {
-        color: #f76466;
 
+.timeOut {
+    color: #f76466;
 }
 
 
 .orderFontStyle {
     font-style: italic;
 }
-/*#topContainer {*/
-        /*background-image: url("images/LandingPage.jpg");*/
-        /*height: 800px;*/
-        /*width: 100%;*/
-        /*background-size: cover;*/
-/*}*/
 
-/*.board {*/
-    /*border-radius: 25px;*/
-    /*border: 2px solid #8AC007;*/
-    /*padding: 20px;*/
-    /*margin: 5px;*/
-    /*width: 280px;*/
-    /*min-height: 350px;*/
-    /*overflow: hidden;*/
-
-
-/*}*/
 

@@ -2,9 +2,8 @@
 {{block header}}
 <header class="container-fluid myheader">
   <div class="jumbotron ">
- <!-- <img src="{{=URL('static','images/IMG_2821.JPG')}}" class="coverImage" /> -->
     <h2 class="headerTitle">Your Group's Order</h2>
-    <p class="headerSubTitle">Select a menu or customize yours, follow an order or start a new one.  </p><br><br>
+    <p class="headerSubTitle">Select a menu or customize yours, follow an order or start a new one.</p><br><br>
     <div class="buttonWrapper">
     {{if auth.user_id is None:}}
     <div id="main_login">
@@ -23,22 +22,19 @@
   </div>
 </header>
 {{end}}
-
 <div id="target"></div>
 
 
 <script id="template" type="text/ractive">
-
 <div>
-    {% #if loading %}
-    <div id="load_spinner">
-    <i class="fa fa-spinner fa-pulse fa-2x"></i>
-    </div>
-    {% /if %}
+{% #if loading %}
+<div id="load_spinner">
+<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
-<br><br>
+{% /if %}
+</div><br><br>
 
-<!-- Modal -->
+<!-- Modal for  -->
 <div class="modal fade bs-example-modal-lg-menu" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -113,26 +109,20 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Create an Order</h4>
       </div>
-      <div class="modal-body">
-
-        <br><br>
+      <div class="modal-body"><br><br>
         <select class="form-control" id="menu_input">
           {% #displayMenu:id %}
           <option value="{%id%}">{% menuName %}</option>
           {% /displayMenu %}
-        </select>
-
-        <br><br>
+        </select><br><br>
         <div class="form-group">
-            <div class='input-group date' id='datetimepicker2'>
-                <input type='text' id="datetime_input" class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
+          <div class='input-group date' id='datetimepicker2'>
+             <input type='text' id="datetime_input" class="form-control" />
+             <span class="input-group-addon">
+             <span class="glyphicon glyphicon-calendar"></span>
+             </span>
+          </div>
         </div>
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -143,9 +133,9 @@
 </div>
 
 
-
+<!-- SideBar Menu -->
 <div class="container-fluid">
-  <div class="row">
+    <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
         <h2 class="menuLabel"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Menu</h2><br>
@@ -154,36 +144,30 @@
         {% /displayMenu %}
       </ul>
     </div>
-
-
-
-
     <div class="col-lg-9">
       <div>
-
         {% #displayOrder:id %}
             <a class="link" href="{{=URL('default', 'singleOrders')}}/{% menuId %}/{% groupOrderId %}">
-            <div class="col-sm-2 groupOrderDisplay ">
-                <div class="orderTitle"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;{% menuName %}</div><br>
-                {% #if Date.now() < Date.parse(groupOrderDeadline) %}
-                <div><p class="orderFontStyle">Deadline:</p><br><br><p class="deadline text-center">{% groupOrderDeadline %}</p></div><br><br>
-                {% else %}
-                <div><p class="orderFontStyle">Deadline:</p><br><br><p class="passDeadline text-center">{% groupOrderDeadline %}</p></div><br><br>
-                {% /if %}
-                <div>
-                {% #if Date.now() < Date.parse(groupOrderDeadline) %}
-                <p class="orderFontStyle active">Status: Active</p>
-                {% else %}
-                <p class="orderFontStyle timeOut">Status: Time Out</p>
-                {% /if %}
-                </div><br><br><br>
-
-                <div><p class="text-right orderFontStyle">Created by&nbsp;{% creatorFirstName %}</p></div>
-            </div>
+                <div class="col-sm-2 groupOrderDisplay ">
+                    <div class="orderTitle"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;{% menuName %}</div><br>
+                    {% #if Date.now() < Date.parse(groupOrderDeadline) %}
+                    <div><p class="orderFontStyle">Deadline:</p><br><br><p class="deadline text-center">{% groupOrderDeadline %}</p></div><br><br>
+                    {% else %}
+                    <div><p class="orderFontStyle">Deadline:</p><br><br><p class="passDeadline text-center">{% groupOrderDeadline %}</p></div><br><br>
+                    {% /if %}
+                    <div>
+                    {% #if Date.now() < Date.parse(groupOrderDeadline) %}
+                    <p class="orderFontStyle active">Status: Active</p>
+                    {% else %}
+                    <p class="orderFontStyle timeOut">Status: Time Out</p>
+                    {% /if %}
+                    </div><br><br><br>
+                    <div><p class="text-right orderFontStyle">Created by&nbsp;{% creatorFirstName %}</p></div>
+                </div>
             </a>
         {% /displayOrder %}
     </div>
-  </div>
+    </div>
 </div>
 
 
@@ -217,9 +201,6 @@
     </div>
   </div>
 </div>
-
-
-
 </script>
 
 
@@ -230,6 +211,7 @@
         $('#datetimepicker2').datetimepicker();
 
     }
+
 
     $(document).ready(function () {
 
@@ -248,6 +230,7 @@
             }
         });
 
+
         $.ajax("{{=URL('default', 'loadMenuOrderList', user_signature=True)}}",
                 {
                     data: {
@@ -262,26 +245,25 @@
                 }
         );
 
-        function validateForm(){
-            var text;
-            var validInput = true;
-            for (var i = 0; i < 10; i++) {
-                var x = document.getElementById("price" + i).value;
-                if (!isNaN(parseFloat(x)) && isFinite(x)) {
-                    if (x >= 0 || x <= 100) {
-                        text = "Input OK";
-                    }
-                }
-                else {
-                    text = "Invalid Input";
-                    validInput = false;
-                }
-                document.getElementById("demo-price" + i).innerHTML = text;
-            }
-            return validInput;
-        }
 
-
+//        function validateForm(){
+//            var text;
+//            var validInput = true;
+//            for (var i = 0; i < 10; i++) {
+//                var x = document.getElementById("price" + i).value;
+//                if (!isNaN(parseFloat(x)) && isFinite(x)) {
+//                    if (x >= 0 || x <= 100) {
+//                        text = "Input OK";
+//                    }
+//                }
+//                else {
+//                    text = "Invalid Input";
+//                    validInput = false;
+//                }
+//                document.getElementById("demo-price" + i).innerHTML = text;
+//            }
+//            return validInput;
+//        }
 
 
         ractive.on("saveMenu", function () {
@@ -293,39 +275,20 @@
             $('input[type=number][id=price]').each(function() {
                 priceArray.push($(this).val());
             });
-//            alert(itemArray[1]);
-//            alert("item: " + itemArray.length);
-//            alert("price array: " + priceArray.length);
-
             for (var i = 0; i < itemArray.length; i++) {
                 if (itemArray[i] == undefined || priceArray[i] == undefined || itemArray[i] == 0) {
                     delete itemArray[i];
                     delete priceArray[i];
                 }
             }
-
             priceArray = priceArray.filter(function(n){ return n != undefined });
             itemArray = itemArray.filter(function(n){ return n != undefined });
-
-//            alert(itemArray[1]);
-//            alert(priceArray[1]);
-//            alert("item " + itemArray.length);
-
-
-
             $.ajax("{{=URL('default', 'addMenuList', user_signature=True)}}",
                     {
                         data: {
-//                menuList: JSON.stringify(menuList),
                             menuName: $("#menuName").val(),
                             itemName: itemArray.join(';'),
                             itemPrice: priceArray.join(';'),
-//                            item1: $("#item1").val(),
-//                            price1: $("#price1").val(),
-//                            item2: $("#item2").val(),
-//                            price2: $("#price2").val(),
-//                            item3: $("#item3").val(),
-//                            price3: $("#price3").val(),
                             groupId: ractive.get('groupId'),
                             menuCreator: ractive.get('menuCreator')
                         },
@@ -338,21 +301,17 @@
                         },
                         error: function () {
                         }
-                    });
+                    }
+            );
         });
 
         ractive.on("showMenuDetail", function (e) {
-
             var menuId = $(e.node).data("id");
-
-//            alert(menuId);
             getMenuDetail(menuId);
-
-
         });
 
-        function getMenuDetail(menuId) {
 
+        function getMenuDetail(menuId) {
             $.ajax("{{=URL('default', 'getMenuDetail', user_signature=True)}}",
                     {
                         data: {
@@ -365,14 +324,11 @@
                         }
                     }
             );
-
-
         }
 
         ractive.on("saveOrder", function(e) {
             var deadline = $('#datetime_input').val();
             var menuId = $("#menu_input option:selected").val();
-//            alert({{=auth.user_id}});
             $.ajax("{{=URL('default', 'addOrder', user_signature=True)}}",
                     {
                         data: {
