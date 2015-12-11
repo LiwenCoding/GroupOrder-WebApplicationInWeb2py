@@ -225,7 +225,7 @@ $(document).ready(function () {
         });
 
         for (var i = 0; i < inputArray.length; i++) {
-            if (inputArray[i] == 0 || inputArray[i] == undefined) {
+            if (inputArray[i] <= 0 || inputArray[i] == undefined) {
                 delete inputArray[i];
                 delete nameArray[i];
                 delete priceArray[i];
