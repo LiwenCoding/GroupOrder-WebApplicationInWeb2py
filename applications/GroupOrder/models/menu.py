@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B('GroupOrder'),XML('&trade;&nbsp;'),
-                  _class="navbar-brand",_href="https://grouporder-1154.appspot.com/GroupOrder/default/index",
+                  _class="navbar-brand",_href="https://liwen.pythonanywhere.com/GroupOrder/default/index",
                   _id="web2py-logo")
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
