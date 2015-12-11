@@ -14,7 +14,6 @@
 ## >>> rows=db(db.mytable.myfield=='value').select(db.mytable.ALL)
 ## >>> for row in rows: print row.id, row.myfield
 #########################################################################
-from datetime import datetime,timedelta
 
 db.define_table('Groups',
                 Field('groupName'),
@@ -56,4 +55,4 @@ db.define_table('JoinGroupRequest',
                 Field('groupAccessId'),
                 Field('groupCreatorId'),
                 Field('groupCreatorName'),
-                Field('status',requires=IS_IN_SET('pending', 'approved', 'rejected')))
+                Field('status', requires=IS_IN_SET('pending', 'approved', 'rejected')))
